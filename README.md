@@ -85,3 +85,19 @@ Next Nathan will open the configured warehouse, call `register_concepts` on that
 ### Concept and warehouse integration passed
 
 Nathan ran the integrated check successfully. All seven preferred member tags joined to a standard tag definition: Assets, Cash, Equity, Liabilities, NetIncome, OperatingCashFlow and Revenue. This confirms the packaged warehouse and concept registration work together on one DuckDB connection. The query selected priority-zero members and one available taxonomy label per member. It does not evaluate question-answer accuracy. Next run the existing loader tests, review the staged warehouse and concept modules and README, and create a Git checkpoint. No commit has been made by the assistant.
+
+### Accounting identity checks next
+
+Confirmed warehouse and concepts commit `3794b2c` and clean working tree. Next Nathan creates `src/sec_analyst/checks.py` with the notebook's five `IDENTITIES` and `identity_check`, passing the DuckDB connection explicitly. Preserve source filters, context grouping, max-value selection, complete-row filtering and tolerance of the larger of USD 1,000 or 0.5% of the total. Module creation and running its five checks remain pending. Prior notebook results provide comparison targets of 99.96%, 84.19%, 95.64%, 94.98% and 82.65% in identity order.
+
+### Accounting identity extraction and real-data checks passed
+
+At Nathan's request, copied the notebook's complete `IDENTITIES` dictionary and `identity_check` function into `src/sec_analyst/checks.py`, stopping before the display code. Changed the function to receive `connection` explicitly and replaced its `con.execute` call with `connection.execute`. Ran all five checks through the configured warehouse. Counts and displayed percentages matched the prior notebook run: Assets/L&SE 24,895 and 99.96%; SalesRevenueNet/Goods+Services 1,107 and 84.19%; GrossProfit/Revenue-Cost 3,210 and 95.64%; ProfitLoss/NetIncome+NCI 7,292 and 94.98%; L&SE/Liabilities+StockholdersEquity 17,649 and 82.65%. All figures use the notebook tolerance and filters. The 10-K/10-Q form filter excludes /A forms but does not filter `prevrpt`; this preserves the notebook logic. Next review the results with Nathan and save the check module in Git. No new commit was made by the assistant.
+
+### Next guided mapper preparation step
+
+Next Nathan creates `src/sec_analyst/mapper_data.py` with `prepare_line_items(connection, processed_dir)`. It registers the notebook's label-normalisation SQL macro, prepares the exact Section 3 `line_items` query, caches the result as `08_line_items.parquet` and exposes `line_items` and `li` on the connection. This preserves the source cache behaviour for this stage. Creation and execution are pending. The custom company/tag count comparison target is 100,244. The accounting checks remain saved and verified, with their Git checkpoint still pending.
+
+### Mapper line-item preparation passed
+
+Nathan ran `prepare_line_items` through the configured warehouse and reported 100,244 distinct custom company/tag pairs, matching the notebook baseline. His five sample rows included repeated `AmortizationOfOverhaulCosts` rows with the cleaned label `amortization of overhaul costs` and statement `CF`, plus `AssetsNoncurrentExcludingPropertyPlantAndEquipment` with label `total other assets` and statement `BS`. The sample query displays filing/tag rows; the headline count uses distinct company/tag pairs. The assistant inspected the saved module. Next review and commit README, `checks.py` and `mapper_data.py`, then package the notebook's silver-label preparation. No new Git commit was made by the assistant.
