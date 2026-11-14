@@ -65,3 +65,23 @@ Both existing loader tests passed after adding the conversion function. The Kagg
 Confirmed loader checkpoint `6672dc6` (`Extract and verify SEC data loader`) and a clean working tree before this step. Next Nathan will create `config/config.yaml`, as requested by the notebook, starting with the dataset handle, four quarters and local raw/processed paths. These paths initially resolve relative to the repository root. PyYAML is already pinned in `requirements.txt`; no new installation is needed for this step. Nathan created and saved `config/config.yaml`, then successfully read the dataset handle and four-quarter list with `yaml.safe_load`. Both raw and processed folder checks returned `True`. The remaining Section 0 model and evaluation settings will be migrated as their code is packaged.
 
 `src/sec_analyst/prepare.py` now reads the YAML and calls `load_quarter` for each configured quarter. Run it from the repository root with `python3 -m sec_analyst.prepare`. Nathan reported the command worked as expected. PyYAML is declared as a direct dependency in `pyproject.toml`. Next refresh the editable installation metadata, run the existing tests and commit the configuration and command before adding the DuckDB connection code.
+
+### DuckDB connection step
+
+Configuration and preparation command committed as `410707f` (`Add configuration-driven data preparation`). Next Nathan creates `src/sec_analyst/warehouse.py` with `connect_warehouse(processed_dir, quarters)`. Preserve the notebook layout: materialise `sub` as a DuckDB table, expose `num`, `pre`, and `tag` as views over the explicitly selected quarterly files, and use a 1 GB memory limit and one thread. The assistant checked these relation operations against all four local quarters in a temporary in-memory connection and obtained 27,677 filings, 7,229 companies and 10,890,076 facts. Saving the module and running Nathan's import check remain pending.
+
+### Warehouse module verified by Nathan
+
+Nathan saved `src/sec_analyst/warehouse.py` and ran the import and connection check successfully. The available names were `num`, `pre`, `sub` and `tag`; totals were 27,677 filings, 7,229 companies and 10,890,076 numeric facts. The assistant inspected the saved module. Next guided step is extracting Section 3's exact `CONCEPTS` dictionary into `src/sec_analyst/concepts.py` and adding a function to create the notebook's `kb` table. Keep all phrases, tags and their precedence order. Concept-module creation and its 7-concept/24-member check are pending. Warehouse and concept work will need a Git checkpoint after review.
+
+### Concept dictionary extracted and checked
+
+At Nathan's request, copied the complete Section 3 `CONCEPTS` dictionary exactly into `src/sec_analyst/concepts.py`, below the existing imports, stopping before `kb_rows = []`. Added the supplied `register_concepts(connection)` function. An in-memory DuckDB check passed with 7 concepts and 24 member tags. All generated tags, priority positions and period types matched the dictionary; Assets produced `('Assets', 'Assets', 0, 'instant')`. Code and notes are saved locally. Next Nathan can repeat the check, then connect this knowledge table to the warehouse. Warehouse and concept changes still need a Git checkpoint after review.
+
+### Next guided check: concepts with the warehouse
+
+Next Nathan will open the configured warehouse, call `register_concepts` on that same connection, and join `kb` to standard tag definitions in `tag` to inspect member tags and official labels. This is a read-only check of the prepared files using an in-memory knowledge table. Nathan's integrated run is pending. After it passes, review and commit the warehouse and concept modules together.
+
+### Concept and warehouse integration passed
+
+Nathan ran the integrated check successfully. All seven preferred member tags joined to a standard tag definition: Assets, Cash, Equity, Liabilities, NetIncome, OperatingCashFlow and Revenue. This confirms the packaged warehouse and concept registration work together on one DuckDB connection. The query selected priority-zero members and one available taxonomy label per member. It does not evaluate question-answer accuracy. Next run the existing loader tests, review the staged warehouse and concept modules and README, and create a Git checkpoint. No commit has been made by the assistant.
