@@ -1,14 +1,97 @@
 # Financial Statement Analyst
 
+## Git checkpoint — 14 November 2026
+
+Nathan requested a local commit of the packaged baseline, fixed evaluation questions, referral evaluation, review-only API, Docker setup, tests and documentation. This checkpoint includes those files. The bulk dataset, virtual environment and `.env` files remain ignored. The small public-data golden-question fixture is intentionally versioned so evaluations use the same questions. The six tests passed locally and in the container during implementation; whitespace and staging checks were performed for this checkpoint. No remote push is part of this action.
+
+Earlier entries below mentioning uncommitted work describe the state before this checkpoint. The parent `Project/README.md` is outside this Git repository and is saved separately. Use `git log -1 --oneline` to identify this checkpoint. The Docker image was built before final documentation changes; rebuild and record its resulting image ID when producing commit-linked submission evidence.
+
+## End-of-day checkpoint — 14 November 2026
+
+**Read this first when returning.** Nathan is stopping for today. The assistant has saved the project files and these notes. The service was last verified healthy at localhost:8008 in the previous work session. Nathan plans to stop it; shutdown has not been observed or performed by the assistant. Do not assume it is still running tomorrow.
+
+### What Docker is doing
+
+The image `fin-analyst:rd1` is the built package containing Linux, Python 3.14.0, pinned libraries and our program. The container is a running instance of that image. Docker Desktop supplies a managed Linux VM on this Mac; Nathan does not need to start his separate VM.
+
+The container starts Uvicorn, the program listening for HTTP requests. FastAPI receives and validates questions. Startup opens DuckDB and builds the existing mapper in memory. While idle, the service waits for requests and keeps that memory available. It is not continually downloading SEC data, rerunning all evaluations or answering questions by itself. Docker periodically calls `/health` to check that the service responds.
+
+Requests follow this route: browser or curl -> Mac port 8008 -> container port 8000 -> existing parser -> SQL -> DuckDB -> Parquet data -> JSON response. A port is a numbered connection point; the two ports are in separate environments. Host port 8000 was already occupied, so our project uses 8008. Compose only exposes this service on the Mac's localhost address, not as a public website.
+
+The financial files remain under `data/processed/` on the Mac, attached read-only inside the container at `/app/data/processed/`. Docker did not copy the dataset into its image. DuckDB's temporary tables and mapper state live in memory and are recreated at the next start. Stopping the container does not delete the source code, prepared files, saved evaluation outputs or built image. The image consumes roughly 1.20 GB of disk space; Docker can also retain build cache. Running containers use memory/CPU; stopping this service releases its process resources, but Docker Desktop can still use resources until quit.
+
+### Stop for today
+
+Run in either the VS Code terminal or macOS Terminal:
+
+```bash
+cd "/Users/nathan/Documents/Uni/Year 3/Enterprise Business/Project/fin-analyst"
+docker compose down
+docker compose ps
+```
+
+`down` stops and removes this project's service container and Compose network. It keeps the image and the mounted Mac files. `ps` should list no running service rows afterwards. These commands do not need the Python virtual environment. Docker Desktop must still be running while issuing them. Afterward, quit Docker Desktop if desired; then close VS Code/the terminal or shut down the Mac. Transient container logs disappear with the container, but our saved check results remain on disk.
+
+### Return next time
+
+1. Open Docker Desktop and wait until its engine is ready.
+2. Open the project in VS Code and run:
+
+```bash
+cd "/Users/nathan/Documents/Uni/Year 3/Enterprise Business/Project/fin-analyst"
+docker compose up -d --wait
+docker compose ps
+```
+
+`up` starts the service from the existing image; `-d` runs it in the background; `--wait` waits for its health check. Startup reloads the data access and mapper, so allow it to finish. Open http://localhost:8008/docs. There is no need to reinstall packages, reconvert the dataset or rebuild the image just because the computer was shut down.
+
+If startup fails, inspect it with `docker compose logs --tail=50 api`. Do not delete data or reinstall everything. For a source/dependency change, rebuild with `docker compose up --build -d --wait`; ordinary `up` does not put edited source files into the existing image.
+
+For Python development commands on the Mac, separately activate the existing environment:
+
+```bash
+source .venv/bin/activate
+```
+
+This activates the Mac's environment, not the container's Python. Docker commands do not require it.
+
+### What is implemented and verified
+
+- Original notebook method packaged in `src/sec_analyst/`; notebook itself unchanged.
+- Four quarters prepared: 27,677 filings, 7,229 companies, 10,890,076 numeric facts.
+- Fixed 151-question reference set: 147/151 development answers correct; 128/151 alternate wording correct. Earlier-rung row-order differences recorded.
+- Baseline referral rules reproduced. Known FutureFuel mistake remains; both phrasings concern the same fact.
+- FastAPI `POST /ask`, `GET /health`, interactive `/docs`; input validation, serialized database access, startup/shutdown cleanup and basic version/status/duration/question-length logging.
+- Six unit-test methods pass locally and in the Linux image. Five actual HTTP responses match the local API responses exactly.
+- Dockerfile, pinned base image/dependencies, Compose localhost mapping, non-root process and read-only data mount. Image size and ID recorded in the container evidence note.
+- SQL tests demonstrate wrong-context rows entering when currency, co-registrant, quarter-duration or original-period filters are removed; annual fiscal-year/amendment fixture also checked. This is initial coverage, not all C1 requirements.
+
+### Limits to remember
+
+All API outputs remain **review-only**: `answer` is null, `decision` is refer, and `candidate` holds the model's proposed number and evidence. HTTP 200 means a request was processed, not that its financial answer is correct. No operational release, public deployment, full served benchmark, realistic load/p95 measurement, monitoring dashboard or finished RD1 submission is claimed.
+
+Rough completion estimates: **RD1 about 50%; entire required project about 30%**. These are estimates of completed work, not expected marks. RD1 is due 23 November 2026.
+
+### First work when we return
+
+1. Let Nathan try the API and explain the response in his own words; continue teaching before adding more unfamiliar infrastructure.
+2. Review `git status` and the saved changes, then make a deliberate Git checkpoint. The assistant has made no new commit. Uncommitted saved files survive shutdown but are not yet a Git snapshot or remote backup. Do not stage the ignored dataset or `.venv`.
+3. Complete remaining independent data checks and fresh-copy reproduction. Build the monitoring dashboard and run a justified load test.
+4. Record measurements against the reviewed commit/image, then prepare architecture comparison, governance reasoning and Nathan's own RD1 reflection/slides/video.
+
+Detailed guides in the repository: `docs/api-and-docker.md`, `docs/progress.md`, `docs/evidence/api-container-check.md`, `docs/evidence/data-quirks.md`, and `docs/decisions/`. Detailed API check responses are saved under ignored `data/evaluation/`. Both this README and the parent Project README contain this checkpoint. Earlier progress entries below are chronological history.
+
 ARI3217 Task 08 turns questions about SEC financial statements into answers with their filing sources. The immediate milestone is Reflective Diary Entry 1, due 23 November 2026.
 
 ## Current status
 
-The project repository has been initialised. Implementation begins with extracting the supplied notebook's loader into `src/sec_analyst/`.
+The loader, warehouse, concepts, mapper, parser, SQL answering and baseline evaluation are packaged in `src/sec_analyst/`. Final accuracy is 147/151 on development questions and 128/151 on alternate wording. The notebook referral policy is now evaluated too; FutureFuel still passes its filter incorrectly. A review-only POST /ask API now runs in Docker at localhost:8008. Six tests pass locally and in Linux; five HTTP responses match the local API exactly. Monitoring dashboard and load testing remain pending.
+
+See [current progress and next steps](docs/progress.md) for the requirements review. Rough readiness estimates: RD1 about 50%, whole required project about 30%; these are completion estimates, not marks.
 
 Nathan confirmed Docker Desktop works on the Apple silicon Mac by running `hello-world`. Reported versions are Docker 29.9.3 and Docker Compose v5.7.0.
 
-The reference notebook is currently in the parent directory. The existing data is also in the parent directory under `data/`. Installation, configuration and run commands will be documented as they are implemented.
+The reference notebook is currently in the parent directory. The repository reads its prepared files from `data/processed/`; the parent notebook files remain available for comparison. Run the commands below from this repository root.
 
 ## Python environment
 
@@ -101,3 +184,87 @@ Next Nathan creates `src/sec_analyst/mapper_data.py` with `prepare_line_items(co
 ### Mapper line-item preparation passed
 
 Nathan ran `prepare_line_items` through the configured warehouse and reported 100,244 distinct custom company/tag pairs, matching the notebook baseline. His five sample rows included repeated `AmortizationOfOverhaulCosts` rows with the cleaned label `amortization of overhaul costs` and statement `CF`, plus `AssetsNoncurrentExcludingPropertyPlantAndEquipment` with label `total other assets` and statement `BS`. The sample query displays filing/tag rows; the headline count uses distinct company/tag pairs. The assistant inspected the saved module. Next review and commit README, `checks.py` and `mapper_data.py`, then package the notebook's silver-label preparation. No new Git commit was made by the assistant.
+
+### Silver-label preparation guided step
+
+Confirmed accounting checks and line-item preparation committed as `b6195ba`, with a clean working tree. Next Nathan adds `min_abs_usd: 10000` to configuration and `prepare_silver_labels(connection, processed_dir, min_abs_usd)` to `mapper_data.py`, preserving the notebook's silver-label query, cached `08_silver.parquet` and final label/statement join. Expected outputs are 1,420 labelled custom company/tag pairs, 972 companies and 691 distinct standard targets. Creation and execution remain pending. These inferred labels provide the evaluation reference for the given mapper.
+
+### Silver-label preparation executed and verified
+
+At Nathan's request, added `min_abs_usd: 10000` to `config/config.yaml` and `prepare_silver_labels` plus its pandas import to `src/sec_analyst/mapper_data.py`. Copied the notebook's silver-label query and final label/statement join, reformatted the SQL for readability and passed the threshold, folder and connection explicitly. Ran the function against all four configured quarters. Results matched the notebook: 1,420 silver labels from 972 companies with 691 distinct standard targets. A second call reused the cache and returned the same data. Preparation and repeat checks took 5.5 seconds together, including warehouse and line-item setup. The formatted matching SQL was compared with the source and matched apart from whitespace and parameter substitution. Results are cached under ignored `data/processed/08_silver.parquet`. Code and both READMEs are saved locally. Next package the given mapper and its company split. This silver-label step has not been committed by the assistant.
+
+### Given mapper packaged and evaluated
+
+At Nathan's request, added `src/sec_analyst/mapper.py` with the notebook's CamelCase splitting, TF-IDF setup, two similarity signals, statement restrictions, suggestion ranking, three evaluation variants and Clopper–Pearson interval. Converted shared notebook variables into instance attributes and passed the warehouse connection explicitly. Added `src/sec_analyst/evaluate_mapper.py` as a runnable evaluation command and `seed: 3217` in configuration. Run from the repository root using `python3 -m sec_analyst.evaluate_mapper`.
+
+The normal command completed successfully on all four quarters. Held out 486 of 972 labelled companies, with 702 test tags. Indexed 270,660 tag/label pairs and 6,067 candidate tags. Results matched Nathan's notebook run: taxonomy only 22.5% top-1 and 43.7% top-5; company labels only 22.2% and 50.9%; combined mapper 32.5% and 60.5%. Combined top-5 interval 56.8%–64.2%. Mapper construction took 8.34 seconds, including vocabulary fitting, vector transformation and company-filtered index construction; evaluation took 1.95 seconds. These timing boundaries differ from the notebook's narrower index timer. The notebook's all-company text vocabulary is preserved; the company split excludes held-out-company examples from the reference index and statement eligibility. This run reproduces the existing baseline methodology.
+
+Code, configuration and both READMEs are saved locally. The silver-label and mapper changes remain uncommitted. Next inspect the packaged mapper results with Nathan and continue to the given question parser and SQL conventions in small explained steps. Full question-answer evaluation remains pending.
+
+### Given question parser packaged and checked
+
+Added `src/sec_analyst/parser.py` with the notebook's company-name cleaning, company lookup, question cleaning, date/fiscal-year extraction, raw-schema tag matching and query-intent rules. Company and schema lookup state now belongs to `QuestionParser`, created from an explicit warehouse connection. Kept the source phrase lists, matching order, refusals and raw-versus-concept behaviour. Expanded company/question cleaning into readable steps. Added `src/sec_analyst/parse_question.py` as a command. Example from the repository root: `python3 -m sec_analyst.parse_question "What were Dupont E I De Nemours's total assets at 31 December 2015?"`. Add `--raw` for the source raw-schema baseline.
+
+The normal CLI run returned status ok, date 2015-12-31, CIK 30554, concept Assets, tag Assets and point intent. Inline compatibility checks compared 72 questions in both parser modes, for 144 comparisons against the original notebook functions, covering all six intents, familiar and held-out-style wording, unknown company/concept, ambiguous company and unrecognised input. All matched, including after the readability edits. Compared all 7,229 company-name normalisations to the original function, all matching. Company-name counts match the notebook: 7,229 companies, 7,204 normalised names and 24 names shared by multiple CIKs. Birner fiscal-2015 revenue and SIC 7389 fiscal-2015 loss count examples parsed as expected. These are compatibility checks, with full golden-set answer-accuracy evaluation still pending.
+
+Code and both READMEs are saved locally. Silver-label, mapper and parser work is still awaiting a Git checkpoint. Next package SQL generation and execution plus the independent golden-answer path to evaluate complete answers. The parser command currently reports the interpretation of a question.
+
+### SQL answer execution packaged and checked
+
+Added `src/sec_analyst/service.py` with the notebook's `RUNGS`, SQL templates, cached SQL execution, answer statuses, numeric correctness tolerance and verification. `QuestionService` owns the warehouse connection and parser. Added `src/sec_analyst/ask.py` as a command, currently exposing rungs 0–3 and defaulting to rung 3, which includes the fiscal-year convention. Custom mapping (rung 4) still requires its mapping-table setup. Example from the repository root: `python3 -m sec_analyst.ask "What was Birner Dental Management Services's revenue in fiscal 2015?"`.
+
+The normal command returned USD 63,843,837 from accession `0001140361-16-059508`, tag Revenues, period 2015-12-31, duration four quarters, 10-K filed 2016-03-30. Rerunning its SQL verified the same value. Compared 48 complete answers against the original notebook SQL functions across six question types, four rungs and both original-only settings. SQL, statuses, values and provenance matched. A deliberately incorrect claim failed verification, and unrecognised text returned the source refusal status. Full golden-set evaluation and R4 integration remain pending.
+
+SQL teaching for Nathan covers SELECT as output columns, FROM as the starting table, JOIN as combining facts with filing details through adsh, WHERE as row filters, ORDER BY as selection order and LIMIT 1 as the first remaining row. The worked example uses company CIK 948072, Revenues, fiscal year 2015, annual 10-K, duration four quarters, filing-period date, parent reporting entity, USD and non-null value, ordered by filed date and accession. The actual service considers all concept member tags and applies tag precedence.
+
+Code and both READMEs are saved locally. Recent mapper, parser and SQL changes still need a Git checkpoint. Next connect custom-tag suggestions and package the independent golden-answer evaluation path.
+
+### Custom-tag mapper connected to the answer command
+
+Added `src/sec_analyst/custom_map.py` with `prepare_custom_map(connection, company_ciks)`. It selects the requested companies' custom income-statement line items, uses the notebook's production mapper with every company's standard line items, takes the first suggestion and creates the expected in-memory `custom_map` table. Empty company lists and empty custom selections create an empty map without calling the mapper. Updated `ask.py` to expose rungs 0–4, default to rung 4, and prepare the selected company's map before answering a successfully parsed company question. Mapping scope follows the requested companies; the golden-set run will pass all golden companies together as the notebook does.
+
+An integrated check reproduced the notebook's seven custom-revenue examples using its independent statement-label selection and compared all seven R4 answers with the original answer/SQL functions on the same mapping table. All matched. For this seven-question slice only, correct answers rose from 0/7 at R3 to 4/7 at R4. Mapped 167 custom income-statement items for these seven companies, suggesting 49 distinct standard targets. Solera quarterly revenue at 2015-12-31 changed from no rows to USD 308,045,000; Calpian fiscal-2015 revenue to USD 6,295,739; Oakridge fiscal-2015 revenue to USD 5,590,094; Bank of New York Mellon quarterly revenue at 2016-09-30 to USD 3,941,000,000. Remaining baseline failures: Union Carbide returned USD 87,000,000 against label-based USD 5,842,000,000, Echo Global Logistics returned no rows against USD 1,512,298,686, and FutureFuel returned USD 69,306,000 against USD 66,893,000. Preserve and investigate these under full evaluation.
+
+Ran the normal default command for Birner and Solera. Both completed with provenance and matching SQL re-execution. Solera's answer used custom tag `RevenueSoftwareHostedSoftwareDeliveryImplementationAndMaintenance`, filing `0001324245-16-000077`, 10-Q filed 2016-01-29, quarter ending 2015-12-31. An empty-map check still answered a standard Assets question successfully. This seven-question result is a focused integration check; the full 151-question ladder is pending.
+
+Code and both READMEs are saved locally. Recent work remains uncommitted. Next package the independent golden-set generation and run the complete five-rung answer evaluation, including held-out wording.
+
+### Full fixed-reference answer evaluation completed
+
+Added `src/sec_analyst/golden.py`, preserving the notebook's reference-answer rules, source revenue-line selection, sampling and development/held-out question templates with explicit inputs. Added `n_per_cell: 12` to configuration. Added `src/sec_analyst/evaluate_answers.py` to prepare the reference set, map custom income-statement tags and run every question through all five rule levels, followed by alternate wording. Run from the repository root with `python3 -m sec_analyst.evaluate_answers`.
+
+An initial generation on the new prepared files produced fingerprint `0713784cea379601b402812baf745c1790be4d4eaac43136c56bad28171f158f`. Original notebook functions and packaged generation produced exactly equal fingerprint columns on those inputs. Repeating generation matched that saved set. Running the original code on Nathan's original notebook files reproduced `d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4`. Ten sampled NetIncome questions differed, comprising three fiscal and seven quarterly questions. The eligible flow data had the same 51,356 records after sorting but a different order, so the original position-based seeded sample selected different questions. Balance-sheet facts and revenue-selection frames matched including row order.
+
+Saved Nathan's earlier exact 151-question set and manifest under `tests/fixtures/`, where they can be versioned. The normal evaluation now reads this fixed set and verifies its fingerprint. `--rebuild-golden` explicitly generates a replacement from configured files. Documented this decision and its tradeoffs in `docs/decisions/0001-freeze-golden-questions.md`. The notebook's published `0c4d749d61487864…` hash remains an observed difference from Nathan's run.
+
+The fixed-reference run used 735 custom income-statement items, 45 mapped to revenue members, and completed 755 development answer checks. Overall R0–R4 results on newly prepared files were 38.4%, 69.5%, 84.8%, 94.7%, 97.4%. Final development result 147/151, interval 93.4%–99.3%, comprising 147 correct, two wrong numbers and two unanswered. Held-out wording returned 128/151 correct (84.8%), two wrong numbers and 21 unanswered; failure statuses were 19 not understood, two no rows and two answered incorrectly. These final figures and later rule levels match Nathan's original notebook run.
+
+Investigated early-rule differences. Original notebook functions on original files reproduced R0 37.1% and R1 68.2%; all 302 original-versus-packaged early-level answers on those inputs matched. The weak templates can choose different tied facts when prepared-file row order changes. Oncor's same 10-Q contains USD 948 million for one quarter and USD 1,891 million for two quarters at 2016-06-30. R0 picks different durations on the two inputs; R2 requires a single quarter and returns USD 948 million on both. Preserve the given method and report this sensitivity.
+
+Saved the golden-set copy, per-question expected/actual answers and SQL, accuracy ladder, metrics with settings/Python/package versions, and comparison evidence under ignored `data/evaluation/`. The final run spent 0.10s loading/checking the fixed reference, 10.07s on custom mapping including mapper build and line-item setup, 16.33s on development evaluation and 0.25s on held-out evaluation. The `reference_preparation` timing includes loading and checking the fixed set, or generation when explicitly requested. Both existing loader tests passed. Both READMEs and all code are saved locally; recent work remains uncommitted. Next review remaining failures and package the notebook's answer/referral policy before operational deployment. The input-order investigation is evidence for RD1 reproducibility discussion.
+
+### Referral policy reproduced and progress audited
+
+Added `policy.py` and `evaluate_policy.py`, preserving Section 6 signals and the three policy calculations with explicit service/configuration inputs. Added the notebook cost assumptions to YAML. Run from the repository root:
+
+```bash
+python3 -m sec_analyst.evaluate_policy
+```
+
+The command loads the fingerprint-checked fixed questions, prepares the same custom mapping scope, evaluates both phrasings and writes `policy_answers.csv`, `policy_comparison.csv`, `wrong_verified_answers.csv` and `policy_metrics.json` under ignored `data/evaluation/`. Development: 126 filtered answers, one wrong; held-out: 115 filtered answers, one wrong. Both wrong rows concern FutureFuel. Restatement flags: 12 of 279 answered questions across the two phrasings. Policy costs and break-even match the notebook: EUR 3,500 analyst-only; filtered EUR 2,566 development/EUR 2,821 held-out at observed rates, versus EUR 9,865/EUR 10,107 at the 95% upper error bounds. Break-even is 1.17%, requiring 256 shown answers if zero errors; current samples do not establish it. These are assumptions-based modeled costs, excluding infrastructure.
+
+Checked all 302 signal outputs and all six policy summaries against the original notebook functions: all matched. Both existing loader unit tests passed and `git diff --check` passed. These compatibility checks are distinct from the still-pending automated trap regression suite. No model tuning or original notebook edits. No commit was made.
+
+The no-wrong-verified-answer release criterion currently fails; it is reported as false in metrics, not implemented as CI enforcement yet. The notebook's aggregate checks and non-blocking restatement flag are preserved. ADR 0002 records the limitations; operational approval and C3 sensitivity remain pending. `ask` remains the diagnostic answer command; this step evaluates referral rules and does not yet add a gated HTTP service.
+
+Corrected stale opening status text. The requirements audit in `fin-analyst/docs/progress.md` (or `docs/progress.md` from the repository) estimates RD1 readiness at about 25% and full required project completion at about 20%, with explicit outstanding work. Next: data-trap regression tests and evidence table, Git checkpoint, then POST /ask, container, fresh-copy reproduction, monitoring/load measurements and RD1 reasoning/reflection.
+
+### API and Docker implemented and checked
+
+Added `src/sec_analyst/api.py` (FastAPI/Uvicorn), `Dockerfile`, `.dockerignore`, `compose.yaml`, request/filter tests and `scripts/check_api.py`. Added pinned API/test dependencies. Startup loads the original mapper once; `prepare_custom_map` accepts that existing mapper without changing scoring. Shared database/map access is serialized and SQL cache cleared between requests. The input is a bounded JSON question, not arbitrary caller SQL. Invalid dates return HTTP 422.
+
+The API returns `decision: refer`, `answer: null`, and the original candidate with evidence because the wrong-verified-answer release criterion remains failed. This review-only serving decision is separate from preserving/evaluating the given model. `/health` reports readiness and `/docs` provides an interactive form.
+
+Docker image `fin-analyst:rd1` built successfully for Linux ARM64, using Python 3.14.0 pinned by digest and pinned dependencies. An initial missing setuptools backend was fixed explicitly. Host port 8000 was occupied, so Compose maps localhost:8008 to internal port 8000. Prepared data is mounted read-only, excluded from the image. Six tests pass locally and in the container. Five HTTP response bodies exactly match saved local API results: Birner, custom Solera, known wrong FutureFuel, unsupported wording and invalid date. The container is healthy and left running for Nathan at http://localhost:8008/docs. Stop it from the repo with `docker compose down`.
+
+Image inspected size: 1,203,599,174 bytes (~1.20 GB). Image ID and evidence are recorded in `docs/evidence/api-container-check.md` within the repo. Learning instructions: `docs/api-and-docker.md`; design decision: ADR 0003; initial data-quirk table: `docs/evidence/data-quirks.md`. These are focused checks, not realistic load/p95 or a full served golden-set evaluation. Original notebook unchanged; no Git commit made. Both READMEs and progress audit updated. Approximate readiness is now RD1 50%, whole required project 30%; remaining work includes fresh-clone/full reproduction, further convention tests, monitoring/load, architecture/governance and Nathan's reflection deliverables.

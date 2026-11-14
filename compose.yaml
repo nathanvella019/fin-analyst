@@ -1,0 +1,13 @@
+services:
+  api:
+    build: .
+    image: fin-analyst:rd1
+    ports:
+      - "127.0.0.1:8008:8000"
+    volumes:
+      - type: bind
+        source: ./data/processed
+        target: /app/data/processed
+        read_only: true
+    mem_limit: 3g
+    cpus: 2

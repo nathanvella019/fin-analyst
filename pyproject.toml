@@ -18,7 +18,12 @@ dependencies = [
     "kagglehub",
     "Jinja2",
     "PyYAML",
+    "fastapi",
+    "uvicorn",
 ]
+
+[project.optional-dependencies]
+test = ["httpx"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -1,0 +1,13 @@
+{
+  "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4",
+  "source_processed_dir": "../data/processed",
+  "quarters": [
+    "2016q1",
+    "2016q2",
+    "2016q3",
+    "2016q4"
+  ],
+  "seed": 3217,
+  "n_per_cell": 12,
+  "reason": "Freeze Nathan\u2019s earlier notebook reference questions so evaluation is independent of preparation row ordering."
+}

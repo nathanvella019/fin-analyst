@@ -8,3 +8,13 @@ quarters:
 
 raw_dir: "../archive (1)"
 processed_dir: "data/processed"
+
+min_abs_usd: 10000
+seed: 3217
+n_per_cell: 12
+
+# Notebook operating assumptions, not measured costs.
+questions_per_week: 150
+analyst_min_per_question: 20
+analyst_cost_per_hour_eur: 70.0
+wrong_number_cost_eur: 2000.0
