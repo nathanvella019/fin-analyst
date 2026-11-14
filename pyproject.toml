@@ -17,6 +17,7 @@ dependencies = [
     "pyarrow",
     "kagglehub",
     "Jinja2",
+    "PyYAML",
 ]
 
 [tool.setuptools.packages.find]

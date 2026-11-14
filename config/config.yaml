@@ -1,0 +1,10 @@
+kaggle_handle: securities-exchange-commission/financial-statement-extracts
+
+quarters:
+  - "2016q1"
+  - "2016q2"
+  - "2016q3"
+  - "2016q4"
+
+raw_dir: "../archive (1)"
+processed_dir: "data/processed"
