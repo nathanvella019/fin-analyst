@@ -28,7 +28,7 @@ python3 -m pip install -e .
 python3 -c "import sec_analyst; print(sec_analyst.__file__)"
 ```
 
-Nathan successfully installed `fin-analyst` version `0.1.0` in editable mode and confirmed that importing `sec_analyst` resolves to `src/sec_analyst/__init__.py`. The package setup is ready for review and a Git commit. Extracting the loader is the next implementation step.
+Nathan successfully installed `fin-analyst` version `0.1.0` in editable mode and confirmed that importing `sec_analyst` resolves to `src/sec_analyst/__init__.py`. The package setup is committed as `ec7fdc6`. The next implementation step is extracting the loader.
 
 ## Working folders
 
@@ -40,3 +40,22 @@ Nathan successfully installed `fin-analyst` version `0.1.0` in editable mode and
 - `docs/diary/entry-1/` holds the first diary's evidence and submission materials.
 
 Our collaboration notes and detailed progress are recorded in the parent `README.md`.
+
+## Loader status
+
+`src/sec_analyst/loader.py` contains `get_raw`, the notebook's streaming `unpack_members`, its exact `TSV` and `EXTRACT` settings, and `load_quarter` with explicit folder arguments. The queries preserve the notebook's column selection and exclusion of contact details. The VS Code KaggleHub import warning was resolved by selecting the project interpreter.
+
+## Quarter conversion
+
+On 14 November 2026, ran `load_quarter` using the project `.venv`, local raw file `../archive (1)/2016q1.json`, and output folder `data/processed/`. The conversion completed successfully:
+
+| Table | Rows |
+| --- | ---: |
+| sub | 6,535 |
+| num | 3,485,997 |
+| pre | 1,051,814 |
+| tag | 85,458 |
+
+All four Parquet files were opened and counted with DuckDB. The numeric-fact count matches Nathan's notebook baseline. The `sub` column list matches the notebook selection. A repeat call skipped conversion because all four outputs existed. Git confirms the generated data file is ignored. Raw JSON was retained and the temporary directory was cleaned up automatically.
+
+Both existing loader tests passed after adding the conversion function. The Kaggle download branch remains unverified because the raw file was available locally. Nathan subsequently ran Q2–Q4 successfully and reported full-year totals of 27,677 filings, 7,229 distinct companies and 10,890,076 numeric facts, matching the notebook baseline. These totals check dataset size, not every individual value. Next: review the loader changes and create a Git checkpoint, then continue packaging in small explained steps.
