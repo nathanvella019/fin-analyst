@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fin-analyst"
+version = "0.1.0"
+description = "Auditable questions over SEC financial statements"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "duckdb",
+    "scikit-learn",
+    "scipy",
+    "pyarrow",
+    "kagglehub",
+    "Jinja2",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["sec_analyst*"]
+namespaces = false
