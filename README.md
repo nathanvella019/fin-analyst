@@ -1,5 +1,15 @@
 # Financial Statement Analyst
 
+## Fresh-clone reproduction passed — 15 November 2026
+
+Monitoring/performance implementation is committed as `f937aba` (`Add service monitoring and measured serving evidence`). Tested that exact full commit in a fresh local clone with a no-cache Linux image build and separate empty prepared-output folder. Four raw-file SHA-256 hashes/sizes and image identity are recorded. Runtime networking disabled; no existing processed caches copied. All ten tests passed; counts reproduced exactly (27,677 filings / 7,229 companies / 10,890,076 facts); mapper reproduced 32.5% top-1 / 60.5% top-5 on 702 tags. Final development 147/151 and alternate wording 128/151 reproduced. All R2–R4 per-question values/statuses/correctness and all held-out answers matched exactly; all six referral summaries matched.
+
+Early-rule sensitivity remains: fresh R0 39.1% vs main 38.4%, with seven values/five correctness flags changed. R1 aggregate remains 69.5% but eleven values/ten correctness flags changed. These differences are consistent with the existing tied-row/order issue; they are not hidden or fixed by changing the model. The fixed benchmark fingerprint remains d9687a7d2ce416a9… . Known FutureFuel mistake still blocks automatic release.
+
+Workflow: `docs/reproduction.md`, ADR 0006; compact evidence: `docs/evidence/fresh-clone-reproduction.md` and `reproduction-manifest.json` within the repo. Full logs/independent outputs: ignored `data/reproduction/f937aba-086oonfv/`. Build 110.59s; conversion 53.81s; mapper stage 14.83s; answer stage 16.77s; policy stage 13.53s. These are stage wall times, not API latencies. Main data and running Compose service were left untouched. Reproduction uses existing raw inputs; no claim about public remote-clone/download access or cross-architecture equality.
+
+Approximate RD1 readiness now about 65%, full required project about 35%. Next: remaining independent data-convention checks and data contract, architecture comparison using measured evidence, current-source governance reasoning, and Nathan's own reflection/slides/video. This evidence/documentation checkpoint follows the tested code commit; final report should cite tested `f937aba` explicitly.
+
 ## Monitoring/performance Git checkpoint and next reproduction — 15 November 2026
 
 Nathan asked to continue. Recording the monitoring/dashboard, persistent request metadata, full served-answer comparison, timing experiments, client tests and documentation in a local Git checkpoint. Added `scripts/reproduce.py` and `docs/reproduction.md` to repeat a fresh local clone/no-cache Linux build from a saved commit, with separate outputs and raw-file fingerprints. Execution of that fresh-copy workflow is pending at this checkpoint; results must be added after it finishes. Prior baseline and release limitations remain unchanged. No remote push is included.
