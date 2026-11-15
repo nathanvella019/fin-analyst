@@ -27,11 +27,13 @@ Completed evidence: [final service table/dashboard](evidence/rd1-service-results
 
 ## 2. Explain the architecture and choice
 
-- [ ] Draw the **four EA layers**: business, data, application and technology. Locate the Python package, API, container, DuckDB/Parquet, dashboard and the person acting on the result.
-- [ ] Name the task's actual **capability patterns**: batch data preparation plus online question answering with human review; verify wording against the task card/session material.
-- [ ] Compare against **one alternative**, such as automatic answers versus human-reviewed answers, in a side-by-side table covering all four required points: latency budget, running cost per day, decision owner and failure handling.
-- [ ] Calculate/estimate **daily running cost**, stating assumptions and what is included. Existing weekly wrong-answer/referral costs are not measured infrastructure running cost. Do not invent a measured hosting cost for the local Mac.
-- [ ] State the **chosen pattern, reasons and switch condition**: which measured threshold or new evidence would make the alternative preferable?
+- [x] Draw the **four EA layers**: business, data, application and technology. Locate the Python package, API, container, DuckDB/Parquet, dashboard and the person acting on the result.
+- [x] Name the task's actual **capability patterns**: batch data preparation plus online question answering with human review; verify wording against the task card/session material.
+- [x] Compare against **one alternative**, such as automatic answers versus human-reviewed answers, in a side-by-side table covering all four required points: latency budget, running cost per day, decision owner and failure handling.
+- [x] Calculate/estimate **daily running cost**, stating assumptions and what is included. Existing weekly wrong-answer/referral costs are not measured infrastructure running cost. Do not invent a measured hosting cost for the local Mac.
+- [x] State the **chosen pattern, reasons and switch condition**: which measured threshold or new evidence would make the alternative preferable?
+
+Draft assessment/diagram: [ADR 0008](decisions/0008-architecture-and-review.md). Nathan still needs to review the reasoning. Daily workflow costs are assumption-based; shared IT costs remain explicitly unmeasured.
 
 ## 3. Complete the EU AI Act reasoning
 

@@ -13,7 +13,7 @@ Updated 15 November 2026. Immediate target: RD1, due 23 November 2026.
 
 ## RD1 estimate: about 70% ready
 
-The grouped technical-evidence work is now assembled and verified for RD1, with stated limitations. This is a rough work-completion estimate, not a predicted mark. Architecture, governance and Nathan's reflection/submission materials are still to do.
+The grouped technical-evidence work is now assembled and verified for RD1, with stated limitations. This is a rough work-completion estimate, not a predicted mark. Architecture/comparison is now drafted for Nathan to review; governance and reflection/submission materials remain.
 
 | Work area | RD1 position | Evidence |
 | --- | --- | --- |
@@ -24,7 +24,7 @@ The grouped technical-evidence work is now assembled and verified for RD1, with 
 | Fresh copy | Current revision 7552b91 passes declared final-baseline checks | `rd1-reproduction-manifest.json` |
 | API/container and serving consistency | Full 302-case comparison matches | Image identity and size in final table |
 | Versioned prediction audit/monitoring/load | 362 records reconciled; actual dashboard capture; 60-request scenario | `docs/evidence/rd1-service-results.md` |
-| Architecture/alternative/daily cost | Pending | Four layers and measured comparison |
+| Architecture/alternative/daily cost | Draft assessment complete for Nathan to review | ADR 0008: diagram, comparison and daily workflow costs; IT cost unmeasured |
 | EU AI Act reasoning | Pending | Current primary sources, tier/provider/deployer |
 | Reflection/PDFs/slides/video | Pending | Nathan's reasoning, 400–600 words, 5–8 slides, <=5 min video |
 
@@ -34,12 +34,12 @@ This is a coarse scope estimate. None of C1–C5 is fully complete yet. C1 has a
 
 ## Alignment and limitations
 
-The original notebook is unchanged and its model has not been tuned or replaced. Code lives in our own repository under `src/`. The Python name `sec_analyst` was chosen at Nathan's request; the task card literally specifies `src/fin_analyst/`, so this departure must be explicit in the submission and confirmed against marking expectations. Pinned dependencies and fresh isolated local-clone reproduction are demonstrated for `f937aba`; early-rung ordering differences remain documented. The monitoring/performance implementation checkpoint is committed as `f937aba`, which passed fresh-clone reproduction. Evaluation artifacts in `data/evaluation/` are ignored by Git; a compact evidence report should be versioned with the final code commit.
+The original notebook is unchanged and its model has not been tuned or replaced. Code lives in our own repository under `src/`. The Python name `sec_analyst` was chosen at Nathan's request; the task card literally specifies `src/fin_analyst/`, so this departure must be explicit in the submission and confirmed against marking expectations. Pinned dependencies and fresh isolated local-clone reproduction are demonstrated for `7552b91`; early-rung ordering differences remain documented. The monitoring/performance implementation checkpoint is committed as `7552b91`, which passed fresh-clone reproduction. Evaluation artifacts in `data/evaluation/` are ignored by Git; a compact evidence report should be versioned with the final code commit.
 
 ## Recommended next sequence
 
 1. Read `docs/evidence/rd1-service-results.md` and `docs/technical-evidence-guide.md` together. Current evidence is tied to implementation 7552b91; final documentation lives in a later evidence commit.
-2. Draw the four architecture layers and compare the chosen capability patterns against one alternative, including a clearly stated daily cost estimate.
+2. Review the simple architecture/comparison in ADR 0008 and decide which reasoning Nathan agrees with.
 3. Research current EU AI Act classification/responsibilities for the intended use.
 4. Gather Nathan's own reflections, then prepare the written PDF, slides PDF and <=5-minute video. Check the updated `docs/rd1-checklist.md`.
 

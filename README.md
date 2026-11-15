@@ -1,5 +1,9 @@
 # Financial Statement Analyst
 
+## Simple architecture assessment added — 15 November 2026
+
+Added one short document, `docs/decisions/0008-architecture-and-review.md`, containing the four-layer table/diagram, batch preparation + online answering + human review patterns, and a side-by-side comparison with automatic release of available answers. Used existing measured p95 (181.4 ms), observed held-out errors and notebook assumptions; no new tests or infrastructure. Assuming five working days, modelled review-all workflow cost is EUR 700/day vs automatic-release EUR 892/day (EUR 2,558 at its error upper bound), excluding shared unmeasured IT cost. Human review time/savings are not measured. Current review-all remains recommended because a wrong number passes the notebook filter; future switch requires the error gate, a demonstrated upper bound below 1%, and the provisional one-second latency budget. This is a working assessment for Nathan to review, not a claim that he personally approved every assumption or signed an enterprise decision. Next: current-source AI Act classification, then Nathan's reflection and submission materials. Keep explanations simple and do not add tests without a concrete need.
+
 ## RD1 technical evidence completed — 15 November 2026
 
 Finished the technical-evidence scope requested by Nathan. Current implementation is committed as `7552b91`; final reports/documentation are recorded in the following evidence checkpoint. Start with `docs/evidence/rd1-service-results.md` in the repository for the single consolidated service table and actual dashboard panel, then `docs/technical-evidence-guide.md` for plain-language explanations.
