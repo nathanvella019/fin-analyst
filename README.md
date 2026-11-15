@@ -1,5 +1,9 @@
 # Financial Statement Analyst
 
+**START HERE: [Nathan's pending tasks](PENDING_FOR_NATHAN.txt) · [RD1 written draft](docs/rd1/written-entry-draft.md)**
+
+Nathan requested that the personal reflection be filled in provisionally in a simple student tone and reviewed by him later. The draft is within 400–600 words and explicitly labelled AI-assisted/suggested first-person wording. Personal review remains pending; do not treat the draft as Nathan's confirmed reactions. The separate TXT file lists his review and submission tasks. No code or extra tests were added for this writing step.
+
 ## AI Act working assessment added — 15 November 2026
 
 Added `docs/decisions/0009-ai-act-classification.md` using official current EU sources. Working conclusion: non-high-risk for the stated company-filings lookup, assuming the combined system qualifies as AI; Article 6/Annex III 5(b) and provider/deployer definitions are cited. The note distinguishes today's local development/testing from an enterprise deployment, flags the AI-definition boundary for a SQL/TF-IDF system, and raises the task's sole-trader/guarantor question for counsel. Direct-interaction transparency is noted under Article 50. Human review/disclaimers are not treated as automatic exemptions. Roles are conditional on who supplies the service under their name, not automatically assigned to the university/SEC/Docker. No code/infrastructure/tests changed. Nathan should review this reasoning before using it personally. Next: gather Nathan's own reflection, then write the 400–600 words and prepare slides/video.

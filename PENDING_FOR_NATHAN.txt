@@ -1,0 +1,45 @@
+PENDING FOR NATHAN — RD1
+Updated: 15 November 2026
+Deadline: Monday 23 November 2026
+
+START HERE WHEN YOU RETURN
+The reflection is filled in for now at:
+  docs/rd1/written-entry-draft.md
+It is an AI-assisted first-person draft, not a confirmed account of your views.
+It is within the 400–600-word limit. Personal review is still pending.
+
+YOUR REVIEW — DO THIS BEFORE SUBMISSION
+[ ] Read the reflection and replace any reaction that is not really yours.
+    In particular: was the wrong FutureFuel answer passing verification
+    actually the result that surprised you most? Explain why in your own words.
+[ ] Check the sentences saying what you learned from SQL, Docker and data order.
+    Keep only statements you understand and agree with.
+[ ] Decide whether you agree with keeping every answer under human review.
+    Say what evidence would make you change that decision.
+[ ] Review the architecture/cost comparison in ADR 0008 and legal assessment
+    in ADR 0009. Costs are estimates; the legal classification is conditional.
+[ ] Update the AI-use disclosure to describe your actual review and assistance.
+    Do not claim you independently wrote or checked something you have not.
+[ ] Recount the reflection after editing: 400–600 words excluding evidence
+    tables, figures, code and references.
+
+FINISH THE SUBMISSION
+[ ] Add the quirk table, service table/dashboard, architecture diagram,
+    comparison table and classification line to the written entry.
+[ ] Export the written entry as PDF after reviewing it.
+[ ] Prepare/review and practise the 5–8 content slides; export them as PDF.
+[ ] Record the video in your own voice, at most five minutes.
+[ ] Check all figures agree across the entry, slides and video.
+[ ] Check VLE upload/link instructions and the applicable rubric/unit heading.
+[ ] Submit the two PDFs and video file/link before the deadline.
+
+WORK ALREADY DONE
+- Packaged service, Docker, tests, data checks and technical evidence.
+- Fresh-copy reproduction, forward-quarter checks and versioned audit.
+- Architecture/comparison draft and source-backed legal working assessment.
+- Initial written reflection filled in, awaiting your personal review.
+
+KEEP THE SCOPE SMALL
+No extra infrastructure or repeated testing is needed just to review the draft.
+The full final project still has later tasks; use docs/rd1-checklist.md to
+separate those from RD1. Do not claim automatic release: the known error remains.

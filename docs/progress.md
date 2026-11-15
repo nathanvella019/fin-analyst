@@ -26,7 +26,7 @@ The grouped technical-evidence work is now assembled and verified for RD1, with 
 | Versioned prediction audit/monitoring/load | 362 records reconciled; actual dashboard capture; 60-request scenario | `docs/evidence/rd1-service-results.md` |
 | Architecture/alternative/daily cost | Draft assessment complete for Nathan to review | ADR 0008: diagram, comparison and daily workflow costs; IT cost unmeasured |
 | EU AI Act reasoning | Working assessment documented for Nathan to review | ADR 0009: official sources, intended-use tier, provider/deployer and scope limits |
-| Reflection/PDFs/slides/video | Pending | Nathan's reasoning, 400–600 words, 5–8 slides, <=5 min video |
+| Reflection/PDFs/slides/video | Written draft filled in; personal review and exports pending | `docs/rd1/written-entry-draft.md`; `PENDING_FOR_NATHAN.txt` |
 
 ## Whole required project estimate: about 35%
 

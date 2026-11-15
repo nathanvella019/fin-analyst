@@ -52,6 +52,8 @@ Working assessment and official citations: [ADR 0009](decisions/0009-ai-act-clas
 - [ ] State what evidence would change his mind and what he would do next.
 - [ ] Disclose AI assistance for code/language and keep the reasoning genuinely Nathan's.
 
+An initial 400–600-word first-person draft is now filled in at [written-entry-draft.md](rd1/written-entry-draft.md), at Nathan's request. It is explicitly provisional: the personal-review checkboxes stay open until he reviews it. His tasks are pinned in [PENDING_FOR_NATHAN.txt](../PENDING_FOR_NATHAN.txt).
+
 ## 5. Produce and submit the three parts
 
 - [ ] Written entry: **400–600 words**, excluding tables, figures, code and references; export PDF.
