@@ -1,5 +1,35 @@
 # Financial Statement Analyst
 
+## Monitoring/performance Git checkpoint and next reproduction — 15 November 2026
+
+Nathan asked to continue. Recording the monitoring/dashboard, persistent request metadata, full served-answer comparison, timing experiments, client tests and documentation in a local Git checkpoint. Added `scripts/reproduce.py` and `docs/reproduction.md` to repeat a fresh local clone/no-cache Linux build from a saved commit, with separate outputs and raw-file fingerprints. Execution of that fresh-copy workflow is pending at this checkpoint; results must be added after it finishes. Prior baseline and release limitations remain unchanged. No remote push is included.
+
+## Served evaluation and timing checkpoint — 15 November 2026
+
+Added `scripts/measure_api.py` with fingerprint verification, fixed-seed workload order, full development/alternate-wording HTTP sweeps and independently scheduled arrivals for a paced test. Per-request records and summaries save under ignored `data/evaluation/api_development/`, `api_held-out/` and `api_paced/`. New client tests prove wrong financial candidates are distinct from connection errors. All ten unit tests passed locally and inside the rebuilt Linux image.
+
+The 151 development HTTP answers reproduced 147 correct; 151 alternate phrasings reproduced 128 correct. Every candidate value, status and correctness flag matched offline records across all 302 checks. All HTTP responses were 200 and all actual decisions remained referral. Sequential client p95: 137.0 ms development, 141.0 ms alternate wording. These are short warm functional sweeps, not sustained capacity measurements.
+
+A separate ten-request sample, one arrival every 24 seconds (150/hour), covered all six question families over 216.08 seconds. All ten returned HTTP 200 and correct candidates; all were still referred. Client p50 115.4 ms; p95/maximum 779.6 ms; maximum dispatch delay 19.9 ms. With ten requests the nearest-rank p95 equals the maximum. This is a short smoke test at S2's target rate, not completion of S2 or a reliable long-term tail-latency claim. Section 6's 150 questions/week economic assumption is a different unit.
+
+Documented provisional one-second p95 demonstration target and experiment limitations in ADR 0005. Measured image ID and resource limits are in `docs/evidence/served-performance.md`; timing chart `docs/evidence/api-latency.png`; repeat instructions `docs/performance.md`. Cold start, real analyst latency, electricity/hosting costs and prolonged/concurrent traffic remain unmeasured. Image packaging was then updated to include measurement scripts/tests. Dashboard counters reset during restart; persistent metadata remains in its named volume.
+
+Both READMEs updated. Monitoring and experiment changes remain uncommitted on top of `ee3bfe5`; source/image attribution must be finalized before submission. Next: review/commit this checkpoint, complete independent convention tests and fresh-copy reproduction, then use measured evidence for architecture/governance and Nathan's RD1 reflection. Approximate RD1 readiness remains around 55–60%; whole required project about 30%. The model's known FutureFuel failure still blocks automatic release.
+
+## Monitoring checkpoint — 15 November 2026
+
+Nathan confirmed the restarted API worked. Added a local dashboard at http://localhost:8008/monitor, with JSON metrics at `/metrics`. It counts POST /ask requests, HTTP/candidate statuses, human referrals, server errors and metadata write errors. It measures application response time and validated question length; p95 uses the latest 1,000 completed requests. Dashboard polls every five seconds. These numbers describe service behavior, not financial correctness.
+
+Metadata records contain UTC timestamps, package version, session ID, statuses, timing and question length, without question text or financial values. Docker persists them under `/app/data/logs/requests.jsonl` in the `request_logs` named volume. Ordinary `docker compose down` keeps the records; `down -v` deletes the volume. Live counters reset on restart. The metadata file currently has no automatic rotation.
+
+Rebuilt/restarted the container successfully. All five existing HTTP checks still match the local API responses exactly. Observed counters: 5 requests, HTTP 200 x4 / 422 x1, three answered candidates, one unsupported question, four referrals, zero server errors/write errors. Five records persisted in the volume. This functional sample is not a realistic load test. Eight unit tests passed locally, including validation counts, server-failure recording, metadata privacy and restart behavior. See `docs/monitoring.md` and ADR 0004 in the repository.
+
+Implementation is based on committed `ee3bfe5` with new uncommitted monitoring/docs changes. Next: Nathan opens `/monitor`, submits a question via `/docs`, and watches the count change. Then design and run a justified traffic experiment, report client-side p95/errors, and record evidence tied to the next reviewed commit/image. Approximate RD1 readiness is now about 55%; whole required project remains about 30%. Independent convention checks, fresh-copy reproduction and RD1 reasoning/submission work remain outstanding. No automatic financial release is enabled.
+
+## Resuming — 15 November 2026
+
+Verified implementation commit `ee3bfe5` on main and a clean working tree before updating these notes. Docker's engine socket was absent, so API availability has not been confirmed today. Nathan should open Docker Desktop, run `docker compose up -d --wait` from `fin-analyst`, then check `docker compose ps`. No data preparation or dependency reinstall is needed. Next teaching step: send the Birner question through `/docs` and understand candidate, provenance, signals and the review-only decision. After that, continue with monitoring/dashboard and measured response times for RD1, retaining the remaining independent-check/fresh-copy tasks. Progress estimates remain about 50% RD1 and 30% overall; restarting alone adds no completion. These new documentation edits are not yet committed.
+
 ## Git checkpoint — 14 November 2026
 
 Nathan requested a local commit of the packaged baseline, fixed evaluation questions, referral evaluation, review-only API, Docker setup, tests and documentation. This checkpoint includes those files. The bulk dataset, virtual environment and `.env` files remain ignored. The small public-data golden-question fixture is intentionally versioned so evaluations use the same questions. The six tests passed locally and in the container during implementation; whitespace and staging checks were performed for this checkpoint. No remote push is part of this action.

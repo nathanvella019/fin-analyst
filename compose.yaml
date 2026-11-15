@@ -9,5 +9,9 @@ services:
         source: ./data/processed
         target: /app/data/processed
         read_only: true
+      - request_logs:/app/data/logs
     mem_limit: 3g
     cpus: 2
+
+volumes:
+  request_logs:

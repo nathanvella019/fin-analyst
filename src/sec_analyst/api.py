@@ -8,13 +8,15 @@ from pathlib import Path
 from threading import Lock
 import time
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, ConfigDict, Field
 import yaml
 
 from sec_analyst.custom_map import prepare_custom_map
 from sec_analyst.mapper import TagMapper
 from sec_analyst.mapper_data import prepare_line_items
+from sec_analyst.monitoring import DASHBOARD, RequestMonitor
 from sec_analyst.policy import signals
 from sec_analyst.service import QuestionService
 from sec_analyst.warehouse import connect_warehouse
@@ -76,7 +78,7 @@ class AnalystRuntime:
         self.connection.close()
 
 
-def create_app(runtime_factory=None):
+def create_app(runtime_factory=None, log_dir=None):
     @asynccontextmanager
     async def lifespan(app):
         factory = runtime_factory or (
@@ -84,20 +86,50 @@ def create_app(runtime_factory=None):
         )
         app.state.runtime = factory()
         try:
+            app.state.monitor = RequestMonitor(
+                log_dir or os.environ.get("FIN_ANALYST_LOG_DIR", "data/logs")
+            )
             yield
         finally:
             app.state.runtime.close()
 
     application = FastAPI(title="Financial Analyst — review API", lifespan=lifespan)
 
+    @application.middleware("http")
+    async def record_request(request: Request, call_next):
+        if request.method != "POST" or request.url.path != "/ask":
+            return await call_next(request)
+        started = time.perf_counter()
+        status = 500
+        try:
+            response = await call_next(request)
+            status = response.status_code
+            return response
+        finally:
+            application.state.monitor.record(
+                status, time.perf_counter() - started,
+                getattr(request.state, "question_chars", None),
+                getattr(request.state, "answer_result", None),
+            )
+
+    @application.get("/metrics")
+    def metrics():
+        return application.state.monitor.snapshot()
+
+    @application.get("/monitor", response_class=HTMLResponse)
+    def monitor():
+        return DASHBOARD
+
     @application.get("/health")
     def health():
         return {"status": "ready", "mode": "review_only", "version": version("fin-analyst")}
 
     @application.post("/ask")
-    def ask(body: Question):
+    def ask(body: Question, request: Request):
+        request.state.question_chars = len(body.question)
         started = time.perf_counter()
         result = application.state.runtime.ask(body.question)
+        request.state.answer_result = result
         logging.getLogger("uvicorn.error").info(
             "ask version=%s status=%s decision=%s question_chars=%d seconds=%.4f",
             result["version"], result["candidate"]["status"], result["decision"],

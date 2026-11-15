@@ -9,6 +9,8 @@
 !config/**
 !tests/
 !tests/**
+!scripts/
+!scripts/**
 **/__pycache__/
 **/*.pyc
 **/*.egg-info/

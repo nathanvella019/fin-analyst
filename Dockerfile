@@ -8,7 +8,8 @@ COPY src/ ./src/
 RUN python -m pip install --no-cache-dir setuptools==80.9.0 && python -m pip install --no-cache-dir --no-deps --no-build-isolation .
 COPY config/ ./config/
 COPY tests/ ./tests/
-RUN useradd --create-home --uid 10001 analyst && mkdir -p /app/data/processed && chown -R analyst:analyst /app
+COPY scripts/ ./scripts/
+RUN useradd --create-home --uid 10001 analyst && mkdir -p /app/data/processed /app/data/logs && chown -R analyst:analyst /app
 USER analyst
 EXPOSE 8000
 HEALTHCHECK --interval=10s --timeout=3s --start-period=60s --retries=3 CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"

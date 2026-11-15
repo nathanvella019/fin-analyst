@@ -72,3 +72,7 @@ The small tests check request validation, connection cleanup and deliberate wron
 Reference documentation: [FastAPI lifecycle](https://fastapi.tiangolo.com/advanced/events/) and [Docker bind mounts](https://docs.docker.com/engine/storage/bind-mounts/).
 
 The Mac already had port 8000 in use. Compose maps host port 8008 to container port 8000; these are separate network spaces.
+
+## Monitoring added 15 November
+
+Open http://localhost:8008/monitor to watch request counts, timing and errors. See [the monitoring guide](monitoring.md). Logs now persist in a Docker named volume across ordinary `docker compose down`; avoid `down -v` if retaining them. All financial candidates still require human review.
