@@ -37,10 +37,12 @@ Draft assessment/diagram: [ADR 0008](decisions/0008-architecture-and-review.md).
 
 ## 3. Complete the EU AI Act reasoning
 
-- [ ] Consult current authoritative legal sources for the intended use.
-- [ ] Identify the risk tier, supporting article/annex, provider and deployer.
-- [ ] Explain how the classification could change with deployment use, including any use involving natural-person creditworthiness. Do not assume all financial software has the same tier.
-- [ ] Produce the required concise classification line with a citation. No legal classification has been completed yet.
+- [x] Consult current authoritative legal sources for the intended use.
+- [x] Identify the risk tier, supporting article/annex, provider and deployer.
+- [x] Explain how the classification could change with deployment use, including any use involving natural-person creditworthiness. Do not assume all financial software has the same tier.
+- [x] Produce the required concise classification line with a citation. A working classification with scope/definition qualifications is now documented.
+
+Working assessment and official citations: [ADR 0009](decisions/0009-ai-act-classification.md). Nathan should review the reasoning; this is not a regulator determination or full compliance audit.
 
 ## 4. Write Nathan's reflection
 

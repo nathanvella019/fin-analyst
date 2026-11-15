@@ -13,7 +13,7 @@ Updated 15 November 2026. Immediate target: RD1, due 23 November 2026.
 
 ## RD1 estimate: about 70% ready
 
-The grouped technical-evidence work is now assembled and verified for RD1, with stated limitations. This is a rough work-completion estimate, not a predicted mark. Architecture/comparison is now drafted for Nathan to review; governance and reflection/submission materials remain.
+The grouped technical-evidence work is now assembled and verified for RD1, with stated limitations. This is a rough work-completion estimate, not a predicted mark. Architecture and legal classification are drafted for Nathan to review; his reflection/submission materials remain.
 
 | Work area | RD1 position | Evidence |
 | --- | --- | --- |
@@ -25,7 +25,7 @@ The grouped technical-evidence work is now assembled and verified for RD1, with 
 | API/container and serving consistency | Full 302-case comparison matches | Image identity and size in final table |
 | Versioned prediction audit/monitoring/load | 362 records reconciled; actual dashboard capture; 60-request scenario | `docs/evidence/rd1-service-results.md` |
 | Architecture/alternative/daily cost | Draft assessment complete for Nathan to review | ADR 0008: diagram, comparison and daily workflow costs; IT cost unmeasured |
-| EU AI Act reasoning | Pending | Current primary sources, tier/provider/deployer |
+| EU AI Act reasoning | Working assessment documented for Nathan to review | ADR 0009: official sources, intended-use tier, provider/deployer and scope limits |
 | Reflection/PDFs/slides/video | Pending | Nathan's reasoning, 400–600 words, 5–8 slides, <=5 min video |
 
 ## Whole required project estimate: about 35%
@@ -40,7 +40,7 @@ The original notebook is unchanged and its model has not been tuned or replaced.
 
 1. Read `docs/evidence/rd1-service-results.md` and `docs/technical-evidence-guide.md` together. Current evidence is tied to implementation 7552b91; final documentation lives in a later evidence commit.
 2. Review the simple architecture/comparison in ADR 0008 and decide which reasoning Nathan agrees with.
-3. Research current EU AI Act classification/responsibilities for the intended use.
+3. Review ADR 0009: non-high-risk for the stated corporate lookup, conditional AI-definition/scope assessment and natural-person creditworthiness boundary.
 4. Gather Nathan's own reflections, then prepare the written PDF, slides PDF and <=5-minute video. Check the updated `docs/rd1-checklist.md`.
 
 Known FutureFuel error, early-rung ordering and notebook-prose/hash differences stay visible. The service remains review-only. Complete final-project raw contracts/full convention checks/CI/MLflow and later extensions separately; they do not block writing honest RD1 evidence now.
