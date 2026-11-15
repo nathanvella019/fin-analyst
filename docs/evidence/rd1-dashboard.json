@@ -1,0 +1,31 @@
+{
+  "version": "0.1.0",
+  "model_identity": {
+    "package_version": "0.1.0",
+    "code_revision": "7552b91",
+    "source_sha256": "3edeb27bc0f3c2dfbca7d9b811ba9180ac1e6e6391a2ff2dce945b9a92eafcf8",
+    "config_sha256": "4d234d4e84c225adbed1d32f9dc22c0bf33124b120a1083d7b4b6ad9048652aa",
+    "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4"
+  },
+  "session_started_utc": "2026-11-15T19:45:29.164060+00:00",
+  "uptime_seconds": 1293.6717175499998,
+  "requests": 362,
+  "http_status_counts": {
+    "200": 362
+  },
+  "candidate_status_counts": {
+    "answered": 337,
+    "no rows": 6,
+    "not understood": 19
+  },
+  "referrals": 362,
+  "server_errors": 0,
+  "log_write_errors": 0,
+  "latency_window_requests": 362,
+  "latency_window_limit": 1000,
+  "p95_seconds": 0.14605020800036073,
+  "mean_question_chars": 63.40331491712707,
+  "question_length_samples": 362,
+  "scope": "POST /ask only; counters reset on restart; metadata file persists",
+  "accuracy": "Unknown online: a reviewed reference answer is required"
+}

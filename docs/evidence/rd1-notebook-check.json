@@ -1,0 +1,27 @@
+{
+  "notebook_sha256": "bafe67423879e3964b393b6672257457455049f83461d3215f3f08e8530eb7f3",
+  "python": "3.14.0 (main, Oct  7 2025, 09:34:52) [Clang 17.0.0 (clang-1700.3.19.1)]",
+  "execution": "Sequential Python code-cell execution, not a Jupyter UI test",
+  "results": [
+    {
+      "cell": 1,
+      "passed": true,
+      "stdout": "Project: /Users/nathan/Documents/Uni/Year 3/Enterprise Business/Project/fin-analyst\nQuarters: ['2016q1', '2016q2', '2016q3', '2016q4']\n"
+    },
+    {
+      "cell": 3,
+      "passed": true,
+      "stdout": "          concept  tags\n           Assets     1\n             Cash     2\n           Equity     2\n      Liabilities     1\n        NetIncome     3\nOperatingCashFlow     2\n          Revenue    13\n"
+    },
+    {
+      "cell": 5,
+      "passed": true,
+      "stdout": "                                                           relationship  contexts    holds\n                              Assets = LiabilitiesAndStockholdersEquity     24895 0.999638\n                                     SalesRevenueNet = Goods + Services      1107 0.841915\n                                 GrossProfit = Revenues \u2212 CostOfRevenue      3210 0.956386\n                                 ProfitLoss = NetIncomeLoss + NCI share      7292 0.949808\nL&SE = Liabilities + StockholdersEquity (ignores NCI, temporary equity)     17649 0.826506\n"
+    },
+    {
+      "cell": 7,
+      "passed": true,
+      "stdout": "Candidate: {'status': 'answered', 'value': 63843837.0, 'sql': \"SELECT n.value, n.adsh, n.tag, n.ddate, n.qtrs, s.form, s.filed FROM num n JOIN sub s USING (adsh) WHERE n.tag IN ('Revenues', 'SalesRevenueNet', 'SalesRevenueGoodsNet', 'SalesRevenueServicesNet', 'RevenuesNetOfInterestExpense', 'RealEstateRevenueNet', 'OilAndGasRevenue', 'RegulatedAndUnregulatedOperatingRevenue', 'ElectricUtilityRevenue', 'HealthCareOrganizationRevenue', 'RevenueMineralSales', 'RefiningAndMarketingRevenue', 'ContractsRevenue') AND s.fy = 2015 AND s.fp = 'FY' AND s.form = '10-K' AND n.qtrs = 4 AND s.form IN ('10-K', '10-Q') AND n.ddate = s.period AND n.coreg IS NULL AND n.uom = 'USD' AND n.value IS NOT NULL AND s.cik = 948072 ORDER BY CASE n.tag WHEN 'Revenues' THEN 0 WHEN 'SalesRevenueNet' THEN 1 WHEN 'SalesRevenueGoodsNet' THEN 2 WHEN 'SalesRevenueServicesNet' THEN 3 WHEN 'RevenuesNetOfInterestExpense' THEN 4 WHEN 'RealEstateRevenueNet' THEN 5 WHEN 'OilAndGasRevenue' THEN 6 WHEN 'RegulatedAndUnregulatedOperatingRevenue' THEN 7 WHEN 'ElectricUtilityRevenue' THEN 8 WHEN 'HealthCareOrganizationRevenue' THEN 9 WHEN 'RevenueMineralSales' THEN 10 WHEN 'RefiningAndMarketingRevenue' THEN 11 WHEN 'ContractsRevenue' THEN 12 ELSE 99 END, s.filed, n.adsh LIMIT 1\", 'provenance': ('0001140361-16-059508', 'Revenues', datetime.date(2015, 12, 31), 4, '10-K', datetime.date(2016, 3, 30))}\nSQL verification: {'rows': 1, 'recomputed': 63843837.0, 'shown': 63843837.0}\nDecision: refer for human review\n"
+    }
+  ]
+}

@@ -13,15 +13,17 @@ Checked 15 November 2026 against the supplied `ARI3217 Reflective diary.pdf` (En
 - [x] Sequential timing sweeps and a short 150/hour paced sample recorded, with limitations.
 - [x] Additional row-order/sampling quirk investigated; early-rung differences and known FutureFuel failure documented.
 
-## 1. Finish the technical evidence
+## 1. Technical evidence completed — 15 November 2026
 
-- [ ] Create a **thin project notebook** that calls package functions rather than containing the implementation. Keep the supplied notebook as the unchanged reference.
-- [ ] Finalize the **data-quirk table**: at least three card-listed quirks plus the additional investigated quirk. For each give the card claim, measured count, consequence, and exact test/input check. Link counts to runnable queries or saved evidence and a commit. Existing trap tests count toward this; RD1 does not require finishing the entire final-project C1 suite.
-- [ ] Add or verify a **forward-in-time evaluation** following the notebook's rules. The general diary instructions explicitly require evaluating forward in time. The current company-held-out mapper split and alternate wording do not substitute for a temporal test. The earlier notebook quarterly observations are recorded, but their repeatable project evidence still needs checking.
-- [ ] Complete the **versioned prediction audit**: current persistent metadata has version/status/timing/length, but omits the proposed value and filing source. Add an auditable prediction record, distinguish review candidate from released answer, and identify the tested commit/image. Do not claim the 0.1.0 package string alone uniquely identifies every working-tree revision.
-- [ ] Finalize and justify the **realistic workload** and p95 evidence. Ten paced observations make p95 equal the maximum; strengthen the sample or explain that limitation honestly. Distinguish 150/hour serving traffic from 150/week in the economic assumptions.
-- [ ] Capture **one readable dashboard panel** showing the measured run. Preserve a screenshot for the written entry/slides; ensure its version/session and counts can be explained.
-- [ ] Assemble **one service-results table**: headline accuracy, mapper build time (given model fitting), fresh-copy result, image size, client p95/workload, tested commit/image and limitations. Select consistent evidence versions and preserve R0/R1 differences rather than blending runs.
+- [x] Create a **thin project notebook** that calls package functions rather than containing the implementation. Keep the supplied notebook as the unchanged reference.
+- [x] Finalize the **data-quirk table**: at least three card-listed quirks plus the additional investigated quirk. For each give the card claim, measured count, consequence, and exact test/input check. Link counts to runnable queries or saved evidence and a commit. Existing trap tests count toward this; RD1 does not require finishing the entire final-project C1 suite.
+- [x] Add or verify a **forward-in-time evaluation** following the notebook's rules. The general diary instructions explicitly require evaluating forward in time. The current company-held-out mapper split and alternate wording do not substitute for a temporal test. The earlier notebook quarterly observations are recorded, but their repeatable project evidence still needs checking.
+- [x] Complete the **versioned prediction audit**: current persistent metadata has version/status/timing/length, but omits the proposed value and filing source. Add an auditable prediction record, distinguish review candidate from released answer, and identify the tested commit/image. Do not claim the 0.1.0 package string alone uniquely identifies every working-tree revision.
+- [x] Finalize and justify the **realistic workload** and p95 evidence. Ten paced observations make p95 equal the maximum; strengthen the sample or explain that limitation honestly. Distinguish 150/hour serving traffic from 150/week in the economic assumptions.
+- [x] Capture **one readable dashboard panel** showing the measured run. Preserve a screenshot for the written entry/slides; ensure its version/session and counts can be explained.
+- [x] Assemble **one service-results table**: headline accuracy, mapper build time (given model fitting), fresh-copy result, image size, client p95/workload, tested commit/image and limitations. Select consistent evidence versions and preserve R0/R1 differences rather than blending runs.
+
+Completed evidence: [final service table/dashboard](evidence/rd1-service-results.md), [data quirks](evidence/data-quirks.md), [forward-time checks](evidence/forward-time.md), [audit](prediction-audit.md), [thin client](../notebooks/analyst_client.ipynb). Tested implementation `7552b91`; ten tests pass; final fresh clone passes declared final-baseline assertions. Original notebook prose/fingerprint discrepancies and early-rung ordering remain explicitly documented. This completes the RD1 technical-evidence scope, not the entire final project or automatic financial release.
 
 ## 2. Explain the architecture and choice
 

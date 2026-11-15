@@ -1,0 +1,14 @@
+{
+  "model_identity": {
+    "package_version": "0.1.0",
+    "code_revision": "7552b91",
+    "source_sha256": "3edeb27bc0f3c2dfbca7d9b811ba9180ac1e6e6391a2ff2dce945b9a92eafcf8",
+    "config_sha256": "4d234d4e84c225adbed1d32f9dc22c0bf33124b120a1083d7b4b6ad9048652aa",
+    "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4"
+  },
+  "seed": 3217,
+  "held_out_companies": 486,
+  "test_tags": 702,
+  "seconds": 45.58044593800014,
+  "scope": "Quarterly reference-index diagnostic from notebook; separate same-algorithm refits restrict line-item vocabulary and taxonomy metadata by quarter. Retrospective silver labels; hand concept table and this cohort were not a prospectively frozen 2016 deployment."
+}

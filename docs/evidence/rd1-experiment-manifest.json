@@ -1,0 +1,297 @@
+{
+  "implementation_commit": "7552b918940c68d06ccf6d6d3d8e4c95a5cbc9f1",
+  "serving_image": {
+    "id": "sha256:0da6b54749409860753da57bdefa4bab150044d51a1ea9714546327058d52fd6",
+    "bytes": 1203903312,
+    "revision": "7552b91",
+    "architecture": "arm64"
+  },
+  "experiments": {
+    "development": {
+      "server_before": {
+        "version": "0.1.0",
+        "model_identity": {
+          "package_version": "0.1.0",
+          "code_revision": "7552b91",
+          "source_sha256": "3edeb27bc0f3c2dfbca7d9b811ba9180ac1e6e6391a2ff2dce945b9a92eafcf8",
+          "config_sha256": "4d234d4e84c225adbed1d32f9dc22c0bf33124b120a1083d7b4b6ad9048652aa",
+          "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4"
+        },
+        "session_started_utc": "2026-11-15T19:45:29.164060+00:00",
+        "uptime_seconds": 648.9311415459997,
+        "requests": 0,
+        "http_status_counts": {},
+        "candidate_status_counts": {},
+        "referrals": 0,
+        "server_errors": 0,
+        "log_write_errors": 0,
+        "latency_window_requests": 0,
+        "latency_window_limit": 1000,
+        "p95_seconds": null,
+        "mean_question_chars": null,
+        "question_length_samples": 0,
+        "scope": "POST /ask only; counters reset on restart; metadata file persists",
+        "accuracy": "Unknown online: a reviewed reference answer is required"
+      },
+      "started_utc": "2026-11-15T19:56:18.075598+00:00",
+      "base_commit": "7552b918940c68d06ccf6d6d3d8e4c95a5cbc9f1",
+      "working_tree_dirty": true,
+      "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4",
+      "configuration": {
+        "url": "http://127.0.0.1:8008",
+        "requests": 151,
+        "rate_per_hour": 0,
+        "phrasing": "question",
+        "label": "development"
+      },
+      "requests": 151,
+      "elapsed_seconds": 10.811327791947406,
+      "p50_seconds": 0.06515474995831028,
+      "p95_seconds": 0.14153304096544161,
+      "max_seconds": 0.2547152919578366,
+      "max_schedule_delay_seconds": 2.291053533554077e-06,
+      "http_status_counts": {
+        "200": 151
+      },
+      "client_errors": 0,
+      "correct_candidates": 147,
+      "human_referrals": 151,
+      "families": {
+        "point": 48,
+        "fiscal": 40,
+        "quarter": 27,
+        "sum": 12,
+        "rank": 12,
+        "count": 12
+      },
+      "scope": "Already-ready local service; includes HTTP round trip; excludes startup. Per-request HTTP connections. Four-client dispatch bound; delays recorded.",
+      "server_after": {
+        "version": "0.1.0",
+        "model_identity": {
+          "package_version": "0.1.0",
+          "code_revision": "7552b91",
+          "source_sha256": "3edeb27bc0f3c2dfbca7d9b811ba9180ac1e6e6391a2ff2dce945b9a92eafcf8",
+          "config_sha256": "4d234d4e84c225adbed1d32f9dc22c0bf33124b120a1083d7b4b6ad9048652aa",
+          "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4"
+        },
+        "session_started_utc": "2026-11-15T19:45:29.164060+00:00",
+        "uptime_seconds": 659.759744385,
+        "requests": 151,
+        "http_status_counts": {
+          "200": 151
+        },
+        "candidate_status_counts": {
+          "answered": 149,
+          "no rows": 2
+        },
+        "referrals": 151,
+        "server_errors": 0,
+        "log_write_errors": 0,
+        "latency_window_requests": 151,
+        "latency_window_limit": 1000,
+        "p95_seconds": 0.14006858399989142,
+        "mean_question_chars": 61.36423841059602,
+        "question_length_samples": 151,
+        "scope": "POST /ask only; counters reset on restart; metadata file persists",
+        "accuracy": "Unknown online: a reviewed reference answer is required"
+      },
+      "same_server_session": true
+    },
+    "held-out": {
+      "server_before": {
+        "version": "0.1.0",
+        "model_identity": {
+          "package_version": "0.1.0",
+          "code_revision": "7552b91",
+          "source_sha256": "3edeb27bc0f3c2dfbca7d9b811ba9180ac1e6e6391a2ff2dce945b9a92eafcf8",
+          "config_sha256": "4d234d4e84c225adbed1d32f9dc22c0bf33124b120a1083d7b4b6ad9048652aa",
+          "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4"
+        },
+        "session_started_utc": "2026-11-15T19:45:29.164060+00:00",
+        "uptime_seconds": 660.9866875939997,
+        "requests": 151,
+        "http_status_counts": {
+          "200": 151
+        },
+        "candidate_status_counts": {
+          "answered": 149,
+          "no rows": 2
+        },
+        "referrals": 151,
+        "server_errors": 0,
+        "log_write_errors": 0,
+        "latency_window_requests": 151,
+        "latency_window_limit": 1000,
+        "p95_seconds": 0.14006858399989142,
+        "mean_question_chars": 61.36423841059602,
+        "question_length_samples": 151,
+        "scope": "POST /ask only; counters reset on restart; metadata file persists",
+        "accuracy": "Unknown online: a reviewed reference answer is required"
+      },
+      "started_utc": "2026-11-15T19:56:30.138205+00:00",
+      "base_commit": "7552b918940c68d06ccf6d6d3d8e4c95a5cbc9f1",
+      "working_tree_dirty": true,
+      "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4",
+      "configuration": {
+        "url": "http://127.0.0.1:8008",
+        "requests": 151,
+        "rate_per_hour": 0,
+        "phrasing": "held_out",
+        "label": "held-out"
+      },
+      "requests": 151,
+      "elapsed_seconds": 9.14993041701382,
+      "p50_seconds": 0.05933950003236532,
+      "p95_seconds": 0.12536220799665898,
+      "max_seconds": 0.24299929197877645,
+      "max_schedule_delay_seconds": 1.7499551177024841e-06,
+      "http_status_counts": {
+        "200": 151
+      },
+      "client_errors": 0,
+      "correct_candidates": 128,
+      "human_referrals": 151,
+      "families": {
+        "point": 48,
+        "fiscal": 40,
+        "quarter": 27,
+        "sum": 12,
+        "rank": 12,
+        "count": 12
+      },
+      "scope": "Already-ready local service; includes HTTP round trip; excludes startup. Per-request HTTP connections. Four-client dispatch bound; delays recorded.",
+      "server_after": {
+        "version": "0.1.0",
+        "model_identity": {
+          "package_version": "0.1.0",
+          "code_revision": "7552b91",
+          "source_sha256": "3edeb27bc0f3c2dfbca7d9b811ba9180ac1e6e6391a2ff2dce945b9a92eafcf8",
+          "config_sha256": "4d234d4e84c225adbed1d32f9dc22c0bf33124b120a1083d7b4b6ad9048652aa",
+          "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4"
+        },
+        "session_started_utc": "2026-11-15T19:45:29.164060+00:00",
+        "uptime_seconds": 670.1426226809999,
+        "requests": 302,
+        "http_status_counts": {
+          "200": 302
+        },
+        "candidate_status_counts": {
+          "answered": 279,
+          "no rows": 4,
+          "not understood": 19
+        },
+        "referrals": 302,
+        "server_errors": 0,
+        "log_write_errors": 0,
+        "latency_window_requests": 302,
+        "latency_window_limit": 1000,
+        "p95_seconds": 0.1287854590000279,
+        "mean_question_chars": 63.62582781456954,
+        "question_length_samples": 302,
+        "scope": "POST /ask only; counters reset on restart; metadata file persists",
+        "accuracy": "Unknown online: a reviewed reference answer is required"
+      },
+      "same_server_session": true
+    },
+    "rd1-peak": {
+      "server_before": {
+        "version": "0.1.0",
+        "model_identity": {
+          "package_version": "0.1.0",
+          "code_revision": "7552b91",
+          "source_sha256": "3edeb27bc0f3c2dfbca7d9b811ba9180ac1e6e6391a2ff2dce945b9a92eafcf8",
+          "config_sha256": "4d234d4e84c225adbed1d32f9dc22c0bf33124b120a1083d7b4b6ad9048652aa",
+          "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4"
+        },
+        "session_started_utc": "2026-11-15T19:45:29.164060+00:00",
+        "uptime_seconds": 671.3034703479998,
+        "requests": 302,
+        "http_status_counts": {
+          "200": 302
+        },
+        "candidate_status_counts": {
+          "answered": 279,
+          "no rows": 4,
+          "not understood": 19
+        },
+        "referrals": 302,
+        "server_errors": 0,
+        "log_write_errors": 0,
+        "latency_window_requests": 302,
+        "latency_window_limit": 1000,
+        "p95_seconds": 0.1287854590000279,
+        "mean_question_chars": 63.62582781456954,
+        "question_length_samples": 302,
+        "scope": "POST /ask only; counters reset on restart; metadata file persists",
+        "accuracy": "Unknown online: a reviewed reference answer is required"
+      },
+      "started_utc": "2026-11-15T19:56:40.457866+00:00",
+      "base_commit": "7552b918940c68d06ccf6d6d3d8e4c95a5cbc9f1",
+      "working_tree_dirty": true,
+      "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4",
+      "configuration": {
+        "url": "http://127.0.0.1:8008",
+        "requests": 60,
+        "rate_per_hour": 360.0,
+        "phrasing": "question",
+        "label": "rd1-peak"
+      },
+      "requests": 60,
+      "elapsed_seconds": 590.1112006669864,
+      "p50_seconds": 0.11650479200761765,
+      "p95_seconds": 0.18139729200629517,
+      "max_seconds": 0.3644158330280334,
+      "max_schedule_delay_seconds": 0.024530791968572885,
+      "http_status_counts": {
+        "200": 60
+      },
+      "client_errors": 0,
+      "correct_candidates": 58,
+      "human_referrals": 60,
+      "families": {
+        "point": 18,
+        "fiscal": 15,
+        "count": 9,
+        "sum": 6,
+        "rank": 6,
+        "quarter": 6
+      },
+      "scope": "Already-ready local service; includes HTTP round trip; excludes startup. Per-request HTTP connections. Four-client dispatch bound; delays recorded.",
+      "server_after": {
+        "version": "0.1.0",
+        "model_identity": {
+          "package_version": "0.1.0",
+          "code_revision": "7552b91",
+          "source_sha256": "3edeb27bc0f3c2dfbca7d9b811ba9180ac1e6e6391a2ff2dce945b9a92eafcf8",
+          "config_sha256": "4d234d4e84c225adbed1d32f9dc22c0bf33124b120a1083d7b4b6ad9048652aa",
+          "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4"
+        },
+        "session_started_utc": "2026-11-15T19:45:29.164060+00:00",
+        "uptime_seconds": 1261.4472417019997,
+        "requests": 362,
+        "http_status_counts": {
+          "200": 362
+        },
+        "candidate_status_counts": {
+          "answered": 337,
+          "no rows": 6,
+          "not understood": 19
+        },
+        "referrals": 362,
+        "server_errors": 0,
+        "log_write_errors": 0,
+        "latency_window_requests": 362,
+        "latency_window_limit": 1000,
+        "p95_seconds": 0.14605020800036073,
+        "mean_question_chars": 63.40331491712707,
+        "question_length_samples": 362,
+        "scope": "POST /ask only; counters reset on restart; metadata file persists",
+        "accuracy": "Unknown online: a reviewed reference answer is required"
+      },
+      "same_server_session": true
+    }
+  },
+  "reproduction_manifest": "rd1-reproduction-manifest.json",
+  "audit_reconciliation": "rd1-audit-reconciliation.json",
+  "working_tree_note": "Measurement client reported dirty because documentation was being assembled. Serving image source was committed and its source hash matches host code. No serving code changed during measurement."
+}

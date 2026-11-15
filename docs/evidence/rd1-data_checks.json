@@ -1,0 +1,155 @@
+{
+  "durations": [
+    {
+      "filings": 11365
+    }
+  ],
+  "entities": [
+    {
+      "assets_facts": 72273,
+      "coreg_assets": 14736,
+      "coreg_share": 0.2038935702129426
+    }
+  ],
+  "units": [
+    {
+      "uom": "USD",
+      "facts": 20041,
+      "filings": 5707
+    },
+    {
+      "uom": "CNY",
+      "facts": 137,
+      "filings": 33
+    },
+    {
+      "uom": "JPY",
+      "facts": 61,
+      "filings": 14
+    },
+    {
+      "uom": "CAD",
+      "facts": 60,
+      "filings": 15
+    },
+    {
+      "uom": "EUR",
+      "facts": 12,
+      "filings": 5
+    },
+    {
+      "uom": "CHF",
+      "facts": 12,
+      "filings": 1
+    },
+    {
+      "uom": "RUB",
+      "facts": 3,
+      "filings": 1
+    },
+    {
+      "uom": "AUD",
+      "facts": 3,
+      "filings": 1
+    },
+    {
+      "uom": "KRW",
+      "facts": 3,
+      "filings": 1
+    },
+    {
+      "uom": "BRL",
+      "facts": 3,
+      "filings": 1
+    },
+    {
+      "uom": "HKD",
+      "facts": 3,
+      "filings": 1
+    },
+    {
+      "uom": "INR",
+      "facts": 3,
+      "filings": 1
+    },
+    {
+      "uom": "GBP",
+      "facts": 1,
+      "filings": 1
+    }
+  ],
+  "currency_sum": [
+    {
+      "all_units": 74975678207290.0,
+      "usd_only": 8522984023857.0
+    }
+  ],
+  "fiscal_year": [
+    {
+      "annual_reports": 6382,
+      "year_mismatches": 467,
+      "jan_mar_ends": 469,
+      "jan_mar_prior_fy": 466
+    }
+  ],
+  "amendments": [
+    {
+      "filings": 27677,
+      "amendments": 883,
+      "originals_later_amended": 674.0
+    }
+  ],
+  "apple_comparatives": [
+    {
+      "name": "APPLE INC",
+      "form": "10-Q",
+      "filed": "2016-01-27 00:00:00",
+      "period": "2015-12-31 00:00:00",
+      "tag": "Assets",
+      "ddate": "2015-09-30 00:00:00",
+      "qtrs": 0,
+      "uom": "USD",
+      "value": 290479000000.0
+    },
+    {
+      "name": "APPLE INC",
+      "form": "10-Q",
+      "filed": "2016-04-27 00:00:00",
+      "period": "2016-03-31 00:00:00",
+      "tag": "Assets",
+      "ddate": "2015-09-30 00:00:00",
+      "qtrs": 0,
+      "uom": "USD",
+      "value": 290479000000.0
+    },
+    {
+      "name": "APPLE INC",
+      "form": "10-Q",
+      "filed": "2016-07-27 00:00:00",
+      "period": "2016-06-30 00:00:00",
+      "tag": "Assets",
+      "ddate": "2015-09-30 00:00:00",
+      "qtrs": 0,
+      "uom": "USD",
+      "value": 290479000000.0
+    },
+    {
+      "name": "APPLE INC",
+      "form": "10-K",
+      "filed": "2016-10-26 00:00:00",
+      "period": "2016-09-30 00:00:00",
+      "tag": "Assets",
+      "ddate": "2015-09-30 00:00:00",
+      "qtrs": 0,
+      "uom": "USD",
+      "value": 290345000000.0
+    }
+  ],
+  "model_identity": {
+    "package_version": "0.1.0",
+    "code_revision": "7552b91",
+    "source_sha256": "3edeb27bc0f3c2dfbca7d9b811ba9180ac1e6e6391a2ff2dce945b9a92eafcf8",
+    "config_sha256": "4d234d4e84c225adbed1d32f9dc22c0bf33124b120a1083d7b4b6ad9048652aa",
+    "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4"
+  }
+}

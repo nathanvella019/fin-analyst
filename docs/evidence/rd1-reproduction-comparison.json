@@ -1,0 +1,32 @@
+{
+  "revision": "7552b918940c68d06ccf6d6d3d8e4c95a5cbc9f1",
+  "rung_differences": [
+    {
+      "rung": "R0 raw schema",
+      "value_differences": 2,
+      "correctness_differences": 1
+    },
+    {
+      "rung": "R1 + taxonomy concepts",
+      "value_differences": 12,
+      "correctness_differences": 10
+    },
+    {
+      "rung": "R2 + as-filed rule",
+      "value_differences": 0,
+      "correctness_differences": 0
+    },
+    {
+      "rung": "R3 + fiscal-year convention",
+      "value_differences": 0,
+      "correctness_differences": 0
+    },
+    {
+      "rung": "R4 + custom-tag mapper",
+      "value_differences": 0,
+      "correctness_differences": 0
+    }
+  ],
+  "held_out_151_match": true,
+  "policy_six_match": true
+}

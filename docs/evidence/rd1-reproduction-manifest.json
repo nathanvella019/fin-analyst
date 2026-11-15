@@ -1,0 +1,80 @@
+{
+  "commit": "7552b918940c68d06ccf6d6d3d8e4c95a5cbc9f1",
+  "started_utc": "2026-11-15T20:07:05.826300+00:00",
+  "output": "data/reproduction/7552b91-03lrqo8a",
+  "raw_files": [
+    {
+      "name": "2016q1.json",
+      "bytes": 570248185,
+      "sha256": "a6e864725cae1538a6a1b1867cc9a299a472a4517fead4a0b4e2d1c0ffd75c2d"
+    },
+    {
+      "name": "2016q2.json",
+      "bytes": 428166190,
+      "sha256": "f5beaf698237af6e31342c6c6797e7d501dfb9dd81650e1ad03db6503e8ea6f4"
+    },
+    {
+      "name": "2016q3.json",
+      "bytes": 431137845,
+      "sha256": "a16409f7bd623652afc1d11b880809ecbf5644f0878896c51a3e18c7faf53989"
+    },
+    {
+      "name": "2016q4.json",
+      "bytes": 429878704,
+      "sha256": "3d4dca6683c8ed42f1ee3dc8d9241214a416dbd9833857ea66eb2b4c61ebf0fc"
+    }
+  ],
+  "stages": [
+    {
+      "stage": "clone",
+      "seconds": 0.09150745801161975,
+      "exit_code": 0
+    },
+    {
+      "stage": "checkout",
+      "seconds": 0.014361208013724536,
+      "exit_code": 0
+    },
+    {
+      "stage": "build",
+      "seconds": 147.0320648329798,
+      "exit_code": 0
+    },
+    {
+      "stage": "prepare",
+      "seconds": 78.77980379201472,
+      "exit_code": 0
+    },
+    {
+      "stage": "tests",
+      "seconds": 3.3953652089694515,
+      "exit_code": 0
+    },
+    {
+      "stage": "mapper",
+      "seconds": 19.135646540962625,
+      "exit_code": 0
+    },
+    {
+      "stage": "answers",
+      "seconds": 16.288352750008926,
+      "exit_code": 0
+    },
+    {
+      "stage": "policy",
+      "seconds": 14.970871625002474,
+      "exit_code": 0
+    },
+    {
+      "stage": "assertions",
+      "seconds": 0.39655295899137855,
+      "exit_code": 0
+    }
+  ],
+  "passed": true,
+  "image": {
+    "id": "sha256:8f32616c01bdb0e2680d0732265c43a55c96d3b7f9d384979a1fd3bee46c5bee",
+    "size": 1203904993,
+    "architecture": "arm64"
+  }
+}

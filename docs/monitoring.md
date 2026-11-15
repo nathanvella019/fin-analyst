@@ -14,7 +14,7 @@ The dashboard tells us what the running program is doing. Open http://localhost:
 
 A request can be processed successfully while returning no answer. That is different from a server crash. A financially wrong number can also arrive in an HTTP 200 response. We need reviewed answers to measure accuracy; the dashboard cannot discover that on its own.
 
-Docker saves request metadata in its `request_logs` named volume at `/app/data/logs/requests.jsonl`. Each line is one JSON record. It contains lengths and statuses, not your question text. Local runs without Docker default to ignored `data/logs/`. Logs persist across ordinary Compose shutdown, while dashboard counts reset at startup. Avoid `docker compose down -v` if you want to keep the volume. Log rotation is not implemented yet.
+Docker saves request metadata in its `request_logs` named volume at `/app/data/logs/requests.jsonl`. Each line is one JSON record. Since revision `7552b91` it contains candidate values, filing provenance, generated SQL and model identity as well as lengths/statuses; it omits raw question text. See [prediction audit](prediction-audit.md). Earlier records used the smaller metadata-only format. Local runs without Docker default to ignored `data/logs/`. Logs persist across ordinary Compose shutdown, while dashboard counts reset at startup. Avoid `docker compose down -v` if you want to keep the volume. Log rotation is not implemented yet.
 
 The dashboard p95 is application-side elapsed time, not a realistic load-test result. A dedicated experiment must measure client-side timings, state the workload, show errors and count both answered and unsupported requests. Until that is done, do not use a handful of dashboard requests as a capacity claim.
 
