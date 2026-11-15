@@ -12,12 +12,13 @@ import time
 
 
 class RequestMonitor:
-    def __init__(self, folder):
+    def __init__(self, folder, identity=None):
         self.folder = Path(folder)
         self.folder.mkdir(parents=True, exist_ok=True)
         self.started = time.monotonic()
         self.session = datetime.now(timezone.utc).isoformat()
         self.version = version("fin-analyst")
+        self.identity = identity or {"package_version": self.version, "code_revision": "unknown"}
         self.lock = Lock()
         self.statuses = Counter()
         self.candidate_statuses = Counter()
@@ -25,10 +26,11 @@ class RequestMonitor:
         self.log_write_errors = 0
         self.recent = deque(maxlen=1000)
 
-    def record(self, status, seconds, question_chars=None, result=None):
+    def record(self, status, seconds, question_chars=None, result=None, request_id=None):
         result = result or {}
         event = {
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "request_id": request_id,
             "session": self.session,
             "version": self.version,
             "http_status": status,
@@ -36,6 +38,13 @@ class RequestMonitor:
             "question_chars": question_chars,
             "candidate_status": result.get("candidate", {}).get("status"),
             "decision": result.get("decision"),
+            "model_identity": self.identity,
+            "candidate_value": result.get("candidate", {}).get("value"),
+            "candidate_provenance": result.get("candidate", {}).get("provenance"),
+            "candidate_sql": result.get("candidate", {}).get("sql"),
+            "released_answer": result.get("answer"),
+            "signals": result.get("signals"),
+            "passes_notebook_filter": result.get("passes_notebook_filter"),
         }
         with self.lock:
             self.statuses[status] += 1
@@ -45,7 +54,7 @@ class RequestMonitor:
             self.recent.append(event)
             try:
                 with (self.folder / "requests.jsonl").open("a", encoding="utf-8") as file:
-                    file.write(json.dumps(event) + "\n")
+                    file.write(json.dumps(event, default=str) + "\n")
             except OSError:
                 self.log_write_errors += 1
                 logging.getLogger(__name__).exception("Could not persist request metadata")
@@ -57,6 +66,7 @@ class RequestMonitor:
                        if event["question_chars"] is not None]
             return {
                 "version": self.version,
+                "model_identity": self.identity,
                 "session_started_utc": self.session,
                 "uptime_seconds": time.monotonic() - self.started,
                 "requests": sum(self.statuses.values()),

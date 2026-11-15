@@ -35,5 +35,10 @@ folder=Path('data/evaluation');folder.mkdir(parents=True,exist_ok=True)
 (folder/'docker_api_checks.json').write_text(json.dumps(records,indent=2)+'\n')
 local=folder/'local_api_checks.json'
 if local.exists():
- assert records==json.loads(local.read_text()),'Local and container responses differ'
- print('All five container responses exactly match saved local API responses.')
+ previous=json.loads(local.read_text())
+ for current,old in zip(records,previous,strict=True):
+  assert current['question']==old['question'] and current['status_code']==old['status_code']
+  current_body={k:v for k,v in current['response'].items() if k!='model_identity'}
+  old_body={k:v for k,v in old['response'].items() if k!='model_identity'}
+  assert current_body==old_body,'Local and container answer responses differ'
+ print('All five container answer responses match saved local API responses; deployment identity reported separately.')

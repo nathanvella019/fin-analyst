@@ -39,6 +39,7 @@ def send(url, row, phrasing, scheduled, start):
             response = error
         with response:
             record["http_status"] = response.status
+            record["request_id"] = response.headers.get("X-Request-ID")
             body = json.load(response)
         candidate = body.get("candidate", {})
         record.update(
@@ -59,7 +60,7 @@ def main():
     parser.add_argument("--rate-per-hour", type=float, default=0,
                         help="0 = sequential functional sweep; >0 = scheduled arrivals")
     parser.add_argument("--phrasing", choices=["question", "held_out"], default="question")
-    parser.add_argument("--label", required=True, choices=["development", "held-out", "paced"])
+    parser.add_argument("--label", required=True, choices=["development", "held-out", "paced", "rd1-peak"])
     args = parser.parse_args()
     if args.requests < 1 or args.rate_per_hour < 0:
         parser.error("requests must be positive and rate cannot be negative")
@@ -80,6 +81,8 @@ def main():
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     dirty = bool(subprocess.check_output(["git", "status", "--porcelain"], text=True).strip())
     started_utc = datetime.now(timezone.utc).isoformat()
+    with urllib.request.urlopen(args.url + "/metrics", timeout=10) as response:
+        server_before = json.load(response)
     start = time.perf_counter()
     results = []
     # At the scheduled rate, dispatch independently of prior response completion.
@@ -102,6 +105,7 @@ def main():
     elapsed = time.perf_counter() - start
     durations = sorted(row["seconds"] for row in results)
     summary = {
+        "server_before": server_before,
         "started_utc": started_utc, "base_commit": commit, "working_tree_dirty": dirty,
         "gold_sha256": fingerprint, "configuration": vars(args),
         "requests": len(results), "elapsed_seconds": elapsed,
@@ -116,6 +120,11 @@ def main():
         "families": {str(k): int(v) for k, v in pd.Series([r["family"] for r in results]).value_counts().items()},
         "scope": "Already-ready local service; includes HTTP round trip; excludes startup. Per-request HTTP connections. Four-client dispatch bound; delays recorded.",
     }
+    with urllib.request.urlopen(args.url + "/metrics", timeout=10) as response:
+        summary["server_after"] = json.load(response)
+    summary["same_server_session"] = (
+        summary["server_after"]["session_started_utc"] == server_before["session_started_utc"]
+    )
     pd.DataFrame(results).to_csv(directory / "requests.csv", index=False)
     (directory / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps(summary, indent=2), flush=True)

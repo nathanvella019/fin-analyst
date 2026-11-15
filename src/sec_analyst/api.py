@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 from threading import Lock
 import time
+from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
@@ -18,6 +19,7 @@ from sec_analyst.mapper import TagMapper
 from sec_analyst.mapper_data import prepare_line_items
 from sec_analyst.monitoring import DASHBOARD, RequestMonitor
 from sec_analyst.policy import signals
+from sec_analyst.provenance import model_identity
 from sec_analyst.service import QuestionService
 from sec_analyst.warehouse import connect_warehouse
 
@@ -31,6 +33,7 @@ class AnalystRuntime:
     """One connection, one mapper, and serialized access to mutable SQL state."""
 
     def __init__(self, config_path):
+        self.identity = model_identity(config_path)
         settings = yaml.safe_load(Path(config_path).read_text())
         processed = Path(settings["processed_dir"])
         self.connection = connect_warehouse(processed, settings["quarters"])
@@ -71,6 +74,7 @@ class AnalystRuntime:
                 "verification": verification,
                 "version": version("fin-analyst"),
                 "mode": "review_only",
+                "model_identity": self.identity,
             }
 
     def close(self):
@@ -87,7 +91,8 @@ def create_app(runtime_factory=None, log_dir=None):
         app.state.runtime = factory()
         try:
             app.state.monitor = RequestMonitor(
-                log_dir or os.environ.get("FIN_ANALYST_LOG_DIR", "data/logs")
+                log_dir or os.environ.get("FIN_ANALYST_LOG_DIR", "data/logs"),
+                getattr(app.state.runtime, "identity", None),
             )
             yield
         finally:
@@ -100,16 +105,19 @@ def create_app(runtime_factory=None, log_dir=None):
         if request.method != "POST" or request.url.path != "/ask":
             return await call_next(request)
         started = time.perf_counter()
+        request_id = str(uuid4())
         status = 500
         try:
             response = await call_next(request)
             status = response.status_code
+            response.headers["X-Request-ID"] = request_id
             return response
         finally:
             application.state.monitor.record(
                 status, time.perf_counter() - started,
                 getattr(request.state, "question_chars", None),
                 getattr(request.state, "answer_result", None),
+                request_id,
             )
 
     @application.get("/metrics")

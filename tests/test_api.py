@@ -7,10 +7,11 @@ from sec_analyst.api import create_app
 
 
 class FakeRuntime:
+    identity={"package_version":"test", "code_revision":"test-commit", "source_sha256":"test-source"}
     def __init__(self):
         self.closed=False
     def ask(self,question):
-        return {'candidate':{'status':'answered','value':100},'decision':'refer','version':'test'}
+        return {'candidate':{'status':'answered','value':100,'provenance':['filing-1','Assets','2016-12-31',0,'10-K','2017-02-01']},'decision':'refer','version':'test'}
     def close(self):
         self.closed=True
 
@@ -34,6 +35,11 @@ class APITests(unittest.TestCase):
             self.assertIn('Financial Analyst monitoring',client.get('/monitor').text)
             records=[json.loads(line) for line in (Path(folder)/'requests.jsonl').read_text().splitlines()]
             self.assertEqual(len(records),6)
+            self.assertEqual(records[-1]['request_id'],response.headers['X-Request-ID'])
+            self.assertEqual(records[-1]['candidate_value'],100)
+            self.assertEqual(records[-1]['candidate_provenance'][0],'filing-1')
+            self.assertEqual(records[-1]['model_identity']['code_revision'],'test-commit')
+            self.assertIsNone(records[-1]['released_answer'])
             self.assertNotIn('Example question',json.dumps(records))
         self.assertTrue(runtime.closed)
 

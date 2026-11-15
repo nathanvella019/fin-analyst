@@ -19,6 +19,7 @@ class MeasurementTests(unittest.TestCase):
             'candidate': {'value': 999, 'status': 'answered'}, 'decision': 'refer',
         }).encode())
         response.status = 200
+        response.headers = {"X-Request-ID":"test-request"}
         with patch('urllib.request.urlopen', return_value=response):
             record = send('http://localhost', self.row, 'question', 0, time.perf_counter())
         self.assertEqual(record['http_status'], 200)

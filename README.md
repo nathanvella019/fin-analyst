@@ -1,5 +1,13 @@
 # Financial Statement Analyst
 
+## RD1 technical evidence implementation — 15 November 2026
+
+Added the thin notebook client, repeatable data-check queries, notebook-compatible quarterly mapper diagnostic and separate time-restricted input refits. Audit logs now include candidate value/provenance/generated SQL and code/config identity, with per-request IDs. Added build revision metadata and measurement-server identity capture. Ten tests pass; notebook code cells execute and reproduce Birner's value. Preliminary data/temporal measurements match the notebook diagnostic; final committed-image measurements and dashboard capture will be recorded after this implementation checkpoint. See ADR 0007. No model algorithm or supplied notebook changed.
+
+## RD1 remaining-work checklist — 15 November 2026
+
+Checked the original diary brief and local rubric against the saved implementation. The complete remaining-work checklist is [RD1 checklist](docs/rd1-checklist.md). It distinguishes required diary evidence from full-project tasks. Important open items: thin notebook client, final quirk table/traceability, forward-in-time evaluation evidence, complete versioned prediction audit, justified p95 workload and dashboard screenshot; architecture/cost comparison; current-source AI Act reasoning; Nathan's own reflection and three submission parts. Existing technical work is retained; no code/model changes were made for this checklist. Checklist/docs edits are not committed yet.
+
 ## Fresh-clone reproduction passed — 15 November 2026
 
 Monitoring/performance implementation is committed as `f937aba` (`Add service monitoring and measured serving evidence`). Tested that exact full commit in a fresh local clone with a no-cache Linux image build and separate empty prepared-output folder. Four raw-file SHA-256 hashes/sizes and image identity are recorded. Runtime networking disabled; no existing processed caches copied. All ten tests passed; counts reproduced exactly (27,677 filings / 7,229 companies / 10,890,076 facts); mapper reproduced 32.5% top-1 / 60.5% top-5 on 702 tags. Final development 147/151 and alternate wording 128/151 reproduced. All R2–R4 per-question values/statuses/correctness and all held-out answers matched exactly; all six referral summaries matched.

@@ -1,6 +1,9 @@
 services:
   api:
-    build: .
+    build:
+      context: .
+      args:
+        FIN_ANALYST_REVISION: ${FIN_ANALYST_REVISION:-unknown}
     image: fin-analyst:rd1
     ports:
       - "127.0.0.1:8008:8000"

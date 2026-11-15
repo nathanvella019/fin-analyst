@@ -58,7 +58,7 @@ def main():
         data = output / "data"
         data.mkdir()
         image = "fin-analyst:reproduction-" + commit[:12]
-        run("build", ["docker", "build", "--no-cache", "-t", image, "."], source)
+        run("build", ["docker", "build", "--no-cache", "--build-arg", "FIN_ANALYST_REVISION=" + commit, "-t", image, "."], source)
         manifest["image"] = json.loads(subprocess.check_output(
             ["docker", "image", "inspect", image, "--format",
              '{"id":"{{.Id}}","size":{{.Size}},"architecture":"{{.Architecture}}"}'], text=True))

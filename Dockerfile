@@ -9,6 +9,9 @@ RUN python -m pip install --no-cache-dir setuptools==80.9.0 && python -m pip ins
 COPY config/ ./config/
 COPY tests/ ./tests/
 COPY scripts/ ./scripts/
+ARG FIN_ANALYST_REVISION=unknown
+ENV FIN_ANALYST_REVISION=$FIN_ANALYST_REVISION
+LABEL org.opencontainers.image.revision=$FIN_ANALYST_REVISION
 RUN useradd --create-home --uid 10001 analyst && mkdir -p /app/data/processed /app/data/logs && chown -R analyst:analyst /app
 USER analyst
 EXPOSE 8000
