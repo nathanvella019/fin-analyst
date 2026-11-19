@@ -16,10 +16,10 @@ A request can be processed successfully while returning no answer. That is diffe
 
 Docker saves request metadata in its `request_logs` named volume at `/app/data/logs/requests.jsonl`. Each line is one JSON record. Since revision `7552b91` it contains candidate values, filing provenance, generated SQL and model identity as well as lengths/statuses; it omits raw question text. See [prediction audit](prediction-audit.md). Earlier records used the smaller metadata-only format. Local runs without Docker default to ignored `data/logs/`. Logs persist across ordinary Compose shutdown, while dashboard counts reset at startup. Avoid `docker compose down -v` if you want to keep the volume. Log rotation is not implemented yet.
 
-The dashboard p95 is application-side elapsed time, not a realistic load-test result. A dedicated experiment must measure client-side timings, state the workload, show errors and count both answered and unsupported requests. Until that is done, do not use a handful of dashboard requests as a capacity claim.
+The captured dashboard reports an application-side p95 of 146.1 ms across 362 requests. The separate busy-period experiment measures the time seen by the client.
 
 After changing source code, `docker compose up --build -d --wait` rebuilds the image and restarts the process. Ordinary `up` reuses the old image. Rebuilding is why the previous dashboard counters disappear; persistent records remain.
 
 ## Separate client measurements
 
-The full 151 development questions and 151 alternate phrasings were checked through HTTP on 15 November, matching offline values/statuses for all 302 responses. See [performance instructions](performance.md) and [measured evidence](evidence/served-performance.md). Client p95 is calculated separately from the mixed rolling dashboard window. A short paced sample at 150 questions/hour is the next rate check.
+The full 151 development questions and 151 alternate phrasings were checked through HTTP on 15 November, matching offline values/statuses for all 302 responses. The final busy-period test sent 60 requests at an assumed 360 per hour. Client p95 was 181.4 ms and 58 candidates were correct. Two questions returned no rows. All 60 went to review. See the [final measurements and workload assumptions](evidence/rd1-service-results.md).

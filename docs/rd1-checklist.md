@@ -1,8 +1,19 @@
 # RD1 remaining checklist
 
-Checked 15 November 2026 against the supplied `ARI3217 Reflective diary.pdf` (Entry 1) and `task-rubric.md`. Deadline: Monday 23 November 2026. This lists RD1 work, not the entire final project. Current readiness estimate of about 65% is rough and is not a predicted mark.
+## Six-task review · 19 November 2026
 
-## Already demonstrated
+Deadline: Monday 23 November 2026. The six investigations have evidence. Nathan’s review of the reflection, the final written PDF, slides and video are still pending.
+
+| Task | What was checked |
+| --- | --- |
+| 1. Given model | The notebook and package use the same two TF-IDF signals and statement filter. The training command is `python3 -m sec_analyst.evaluate_mapper` from the repo root after data preparation. It reads YAML, fits the mapper in memory and scores it. The saved clean-run log gives 6.32 seconds to fit and 1.18 seconds to score. The thin client calls package functions. All ten local unit tests passed again on 19 November. |
+| 2. Data traps | All seven groups of saved SQL results matched a fresh read of the configured Parquet files. Page 2 covers three numbered card items: units (3), fiscal years (4) and duplicates (5). Two examples illustrate item 5. The extra finding concerns row order. The SQL tests check that removing a context filter admits a wrong figure. |
+| 3. Reproduction and container | The saved clean-build manifest passed for `7552b91`. The serving image is 1.20 GB. Training, offline answering and the API share line-label preparation and mapper code. The held-out evaluation deliberately restricts the search index, while the API builds the full index at startup. All 302 served and offline outcomes matched. The final score reproduced. Earlier query ties and differences from the notebook’s printed summary remain documented. |
+| 4. Monitoring | The API records proposed answers and model identity. Metrics include requests, elapsed time and question length. Recounting the saved request files gave 362 distinct IDs. Recalculating p95 for the 60 warm busy-period requests gave 181.4 ms. The earlier Docker run supplies the deployment evidence. |
+| 5. Architecture and decision | ADR 0008 shows the four layers. It compares analyst review and automatic release by response time, estimated daily cost, decision owner and failure handling. Human review time and shared IT costs are unmeasured. |
+| 6. Classification | ADR 0009 and page 4 give the working tier for a company lookup, the legal basis and both prospective roles. The assessment depends on who supplies the service and what the user does with it. |
+
+## Earlier checkpoints
 
 - [x] Packaged given method, configuration and runnable commands; original reference notebook preserved.
 - [x] Ten tests pass; initial SQL-trap regression tests exist.
@@ -57,7 +68,7 @@ An initial 400–600-word first-person draft is now filled in at [written-entry-
 ## 5. Produce and submit the three parts
 
 - [ ] Written entry: **400–600 words**, excluding tables, figures, code and references; export PDF.
-- [ ] Include the required evidence: quirk table, service table + dashboard panel, four-layer diagram, two-pattern comparison table and classification line.
+- [x] Included in the [written preview](../output/pdf/RD1-written-entry-preview.pdf): quirk table, service table + dashboard panel, four-layer diagram, two-pattern comparison table and classification line.
 - [ ] Slides: **5–8 content slides**, with optional title/reference slides; export PDF. Present the same investigation, not new unsupported results.
 - [ ] Video: **at most five minutes**, Nathan's own voice; present slides and showcase the service. Appearing on camera is optional.
 - [ ] Check every number and version across text, slides and video against the same evidence; clearly identify known failures and sample limits.

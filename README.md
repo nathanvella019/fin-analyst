@@ -1,5 +1,11 @@
 # Financial Statement Analyst
 
+[Six-task review, 19 November](docs/rd1-checklist.md). All ten local tests passed. The written preview now shows three distinct numbered data traps and the extra row-order finding.
+
+## RD1 written preview · 18 November 2026
+
+[Open the four-page written preview](output/pdf/RD1-written-entry-preview.pdf). The 498-word draft and required evidence are assembled. Nathan’s next step is to review the first-person reflection and AI disclosure before the final export, slides and video.
+
 **START HERE: [Nathan's pending tasks](PENDING_FOR_NATHAN.txt) · [RD1 written draft](docs/rd1/written-entry-draft.md)**
 
 Nathan requested that the personal reflection be filled in provisionally in a simple student tone and reviewed by him later. The draft is within 400–600 words and explicitly labelled AI-assisted/suggested first-person wording. Personal review remains pending; do not treat the draft as Nathan's confirmed reactions. The separate TXT file lists his review and submission tasks. No code or extra tests were added for this writing step.

@@ -54,7 +54,7 @@ Bulk raw/prepared data, full generated logs and working artifacts remain ignored
 
 ## What remains outside this technical checkpoint
 
-Architecture and alternative-pattern comparison, daily cost reasoning, current-source EU AI Act classification, Nathan's reflection and the written/slides/video submission remain to do. Full final-project raw contracts, independent convention suite, automated release gate, MLflow, graph/knowledge-layer extensions and LLM work are not completed by this checkpoint. The wrong verified FutureFuel answer still blocks automatic release.
+Later work added the [architecture comparison](../decisions/0008-architecture-and-review.md), [AI Act assessment](../decisions/0009-ai-act-classification.md) and [written preview](../../output/pdf/RD1-written-entry-preview.pdf). Nathan still needs to review the reflection and finish the submission. Full final-project raw contracts, independent convention suite, automated release gate, MLflow, graph/knowledge-layer extensions and LLM work are not completed by this checkpoint. The wrong verified FutureFuel answer still blocks automatic release.
 
 ## Notebook-prose differences we do not hide
 

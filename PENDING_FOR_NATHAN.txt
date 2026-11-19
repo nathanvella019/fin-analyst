@@ -1,9 +1,11 @@
 PENDING FOR NATHAN — RD1
-Updated: 15 November 2026
+Updated: 18 November 2026
 Deadline: Monday 23 November 2026
 
 START HERE WHEN YOU RETURN
-The reflection is filled in for now at:
+Read the assembled preview first:
+  output/pdf/RD1-written-entry-preview.pdf
+The editable reflection is at:
   docs/rd1/written-entry-draft.md
 It is an AI-assisted first-person draft, not a confirmed account of your views.
 It is within the 400–600-word limit. Personal review is still pending.
@@ -24,8 +26,8 @@ YOUR REVIEW — DO THIS BEFORE SUBMISSION
     tables, figures, code and references.
 
 FINISH THE SUBMISSION
-[ ] Add the quirk table, service table/dashboard, architecture diagram,
-    comparison table and classification line to the written entry.
+[x] The written preview includes the quirk table, service table/dashboard,
+    architecture diagram, comparison table and classification line.
 [ ] Export the written entry as PDF after reviewing it.
 [ ] Prepare/review and practise the 5–8 content slides; export them as PDF.
 [ ] Record the video in your own voice, at most five minutes.
