@@ -2,25 +2,31 @@
 
 **Status: AI-assisted first-person draft requested by Nathan. Personal reactions and conclusions are suggested wording, not confirmed statements of his views. Nathan must review and personalise them before submission.**
 
-Reflection body: **498 words** by whitespace count. Review notes, evidence material and references below are outside that count. This is not a final submission PDF.
+Reflection body: **455 words** including section headings and AI disclosure. Review notes, evidence material and references below are outside that count. This is not a final submission PDF.
 
 ## Reflection body
 
-For this investigation, I focused on turning the supplied financial statement notebook into a service that could be repeated and checked. I kept the given model unchanged and moved its code into a Python package. The final model answered 147 of 151 development questions correctly, but accuracy fell to 128 of 151 when the wording changed. This showed me that a strong result depends partly on how the questions are asked.
+### Would I put this figure in a report?
 
-The most surprising result was that a wrong FutureFuel answer passed the notebook's verification filter. I had expected verification to mean the answer was correct. However, rerunning a query can confirm that a number came from the database without confirming that the chosen financial tag answers the intended question. This is why I would keep human review. A fast, successful response is useful, but it is not enough evidence to release a financial number automatically.
+FutureFuel’s quarterly sales made me pause. The question asked for one figure. The service returned $69,306,000. I could trace it to the filing. I could even run the query a second time and get the same answer. Yet the line used for our reference answer gave $66,893,000. The service had picked sales of goods. To decide which figure belonged in a report, someone still had to read what each line covered.
 
-The data checks helped explain this problem. We found 11,365 quarterly reports containing more than one net-income duration at the same date. Without the correct duration filter, a six-month figure could answer a three-month question. Small tests made this easier to understand because they showed exactly what happened when a filter was removed.
+That example changed how I read our score. The supplied model answered 147 of 151 questions correctly. When the same questions were phrased differently, it got 128 right. I would want an analyst to know both figures before relying on the service.
 
-Moving into Docker also exposed a missing packaging dependency. It worked in the existing environment but failed during the clean build until that dependency was included. A fresh copy then reproduced the final scores. Some early query results still changed with data ordering, which we documented. I learned that saving code and setting a random seed do not guarantee that every result will repeat.
+### What the tests taught me
 
-The four architecture layers helped me connect these technical findings to the wider process. The business layer contains the analyst and the decision to use a number. The data layer contains filings and financial definitions. The application layer contains the package, API and dashboard. Docker and the Mac provide the technology layer. The dashboard can show slow requests or failures, but it cannot identify a financially wrong answer without reviewed reference answers.
+One detail I would have missed is how much a date leaves out. In 11,365 quarterly filings, the same end date appeared on profit figures covering different lengths of time. Both numbers can be genuine. If I ask for three months of profit and get six, checking the date again gets me nowhere. Our test puts both figures in one filing and makes the query pick the quarter.
 
-Our service combines batch data preparation, online questions and human review. In the declared busy-period test, 95% of requests finished within 181.4 milliseconds. That met our provisional one-second budget. Using the notebook's assumptions, reviewing all questions costs about EUR 700 per working day, compared with EUR 892 for automatically releasing available answers and paying the assumed error and referral costs. These are estimates excluding shared IT costs; we have not measured any reduction in review time.
+Docker exposed a different assumption. The notebook ran on my Mac, where a packaging tool called setuptools was already there. The clean build failed when it tried to install the project. Once the build installed that tool explicitly, a fresh copy reproduced the final scores. A few early queries still picked different rows when two filing lines had equal priority. Now I know what to check when someone says a run was reproducible.
 
-For the stated company-lookup purpose, the working AI Act assessment is non-high-risk, assuming the combined system qualifies as AI. Use in an individual's creditworthiness assessment would require reassessment. In a future deployment, the provider supplies the system under its name and the deployer uses it. I would reconsider automatic release only after stronger reviewed evidence meets the error threshold while keeping acceptable response times.
+### Where I would keep an analyst involved
 
-AI assistance supported the code, evidence organisation and this draft. The personal interpretation and final wording still require my own review before submission.
+I would load the filings each quarter, answer questions as they arrive and give the analyst the proposed figure alongside its source. During our busy-period test, 95% of requests finished within 181.4 milliseconds. The dashboard could tell me how quickly the service responded. It would take a reviewer who understood the question to spot the problem with the sales line.
+
+Using the desk’s assumptions, reviewing everything costs about €700 per working day. Releasing every available answer comes to €892 once mistakes and referrals are counted. I would try selective release only after verified answers pass review with zero errors, the upper estimate of the error rate at 95% confidence falls below 1%, and 95% of requests still finish within a second.
+
+That decision also depends on who will use the answer. Looking up a company’s sales is one use. If a lender wanted to use the service to assess a person’s creditworthiness, I would revisit the risk classification before agreeing to that change.
+
+AI helped with code, organising evidence and drafting this entry. The personal interpretation is still mine to review.
 
 ## Evidence to include with the final entry
 

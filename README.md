@@ -2,9 +2,9 @@
 
 [Six-task review, 19 November](docs/rd1-checklist.md). All ten local tests passed. The written preview now shows three distinct numbered data traps and the extra row-order finding.
 
-## RD1 written preview · 18 November 2026
+## RD1 written preview · 19 November 2026
 
-[Open the four-page written preview](output/pdf/RD1-written-entry-preview.pdf). The 498-word draft and required evidence are assembled. Nathan’s next step is to review the first-person reflection and AI disclosure before the final export, slides and video.
+[Open the four-page written preview](output/pdf/RD1-written-entry-preview.pdf). The 455-word reflection opens with the FutureFuel sales question and follows it through testing and the decision to keep human review. Nathan’s next step is to review the first-person reflection and AI disclosure before the final export, slides and video.
 
 **START HERE: [Nathan's pending tasks](PENDING_FOR_NATHAN.txt) · [RD1 written draft](docs/rd1/written-entry-draft.md)**
 

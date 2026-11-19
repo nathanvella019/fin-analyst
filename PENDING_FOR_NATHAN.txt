@@ -1,5 +1,5 @@
 PENDING FOR NATHAN — RD1
-Updated: 18 November 2026
+Updated: 19 November 2026
 Deadline: Monday 23 November 2026
 
 START HERE WHEN YOU RETURN
@@ -22,7 +22,7 @@ YOUR REVIEW — DO THIS BEFORE SUBMISSION
     in ADR 0009. Costs are estimates; the legal classification is conditional.
 [ ] Update the AI-use disclosure to describe your actual review and assistance.
     Do not claim you independently wrote or checked something you have not.
-[ ] Recount the reflection after editing: 400–600 words excluding evidence
+[ ] Recount the reflection after editing: aim for 400–550 words excluding evidence
     tables, figures, code and references.
 
 FINISH THE SUBMISSION
