@@ -1,5 +1,9 @@
 # RD1 technical evidence index
 
+The revised diary uses the [clean monitoring run](rd1-grafana.md), [notebook timing, denominators and cost calculations](rd1-review-calculations.json) and [recorded API exchange](rd1-recorded-demo.json). The earlier fresh-copy experiment remains the source for reproducing the final answer scores.
+
+The [20 November Grafana run](rd1-grafana.md) records the follow-up check using the Session 4 monitoring tools, with its own timing results and screenshot.
+
 Start with `rd1-service-results.md` for the final consolidated table and dashboard panel. Technical implementation is revision `7552b91`; final documentation may live in a later commit. Keep each result tied to its own tested commit/image rather than treating every historical run as the same experiment.
 
 | Requirement | Evidence |

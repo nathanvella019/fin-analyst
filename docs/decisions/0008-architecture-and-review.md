@@ -1,43 +1,21 @@
 # RD1: architecture and human review
 
-15 November 2026. Current local-demo design; draft reasoning for Nathan to review. No system changes or new tests.
+The local design and review comparison were recorded on 15 November 2026. The diagram now includes [the Prometheus and Grafana setup](0010-prometheus-and-grafana.md).
 
 ## Four layers
 
 | Layer | Simple meaning | Our project |
 | --- | --- | --- |
 | Business | Why, and who decides? | Help an analyst find a financial number. The analyst checks the filing and decides whether to use it. Nathan currently operates the demo. |
-| Data | What information? | SEC files, prepared Parquet tables queried through DuckDB, concepts, evaluation answers and audit records. |
-| Application | Which programs? | Python package, question API, notebook client and monitoring dashboard. |
-| Technology | Where does it run? | Docker container on the Mac through Docker Desktop's Linux VM; local storage, two CPU quota and 3 GB limit. |
+| Data | What information? | SEC files, prepared Parquet tables queried through DuckDB, concepts, evaluation answers, audit records and stored metrics. |
+| Application | Which programs? | Python package, question API, notebook client, Prometheus and Grafana. |
+| Technology | Where does it run? | Docker Desktop runs the API, Prometheus and Grafana containers on the Mac. A read-only mount supplies the prepared files. Docker volumes hold logs and monitoring history. |
 
-```mermaid
-flowchart TB
-    subgraph Business
-        A[Analyst asks and approves]
-    end
-    subgraph Application
-        P[Python package and question API]
-        M[Monitoring dashboard]
-    end
-    subgraph Data
-        W[SEC warehouse: DuckDB and Parquet]
-        L[Audit records and metrics]
-    end
-    subgraph Technology
-        C[Docker container and Mac storage]
-    end
-    A -->|question| P
-    P -->|candidate and filing source| A
-    P -->|SQL| W
-    P -->|records| L
-    L --> M
-    P -. runs inside .-> C
-    M -. runs inside .-> C
-    W -. stored and queried through .-> C
-```
+![Four layers and the path of a financial question through the rule-based parser, tag mapper, DuckDB query and analyst review, alongside Prometheus and Grafana monitoring](../../output/RD1-four-layer-architecture.png)
 
 The dashboard is an application; its container is technology. Correctness needs reviewed answers in the data layer. Without those labels, a healthy dashboard cannot tell the business that a number is wrong.
+
+See the [technical repository map](../../output/RD1-technical-repository-map.png) for the individual files and execution paths.
 
 ## Our pattern and one alternative
 
@@ -67,3 +45,9 @@ Keep human review. Speed is adequate for the demonstration, while the held-out w
 Before considering selective automatic release, require the no-wrong-verified-answer gate to pass, an independently reviewed evaluation whose 95% upper wrong-number bound is below the task's 1% target, and p95 staying below one second under a justified workload. Current error evidence fails those conditions. This does not establish enterprise readiness or measured savings.
 
 Sources: [measured service](../evidence/rd1-service-results.md), [policy assumptions/results](0002-preserve-notebook-referral-policy.md), supplied Session 1 knowledge notes. Implementation `7552b91`; technical evidence `b326794`. Daily figures divide weekly costs by five. Nathan should decide which reasoning he agrees with before using it in his reflection.
+
+### RD1 cost sensitivity and review sample
+
+For the release-every-available-number option, 130 of 151 reworded questions returned a number, two were wrong, and 21 needed a manual answer. Daily cost is 30 × [(2/151 × €2,000) + (21/151 × €70/3)] = €892.05. Substituting (130/151 × 0.047635194) for 2/151 uses the exact one-sided 95% binomial upper bound among returned figures and gives €2,557.98/day. Review-all costs 30 × €70/3 = €700/day. The costs are equal when 2 × loss per wrong release = 130 × €70/3, or €1,516.67 per wrong release. Below that loss, release-all is cheaper at the observed error frequency. The financial loss and review time are assumptions.
+
+For a future selective-release trial, an analyst independent of development should check 300 distinct representative eligible answers against their filings. Under independent sampling, zero wrong answers gives a one-sided 95% upper error bound of 1 − 0.05^(1/300) = 0.9936%. The minimum count strictly below 1% is 299. Paired phrasings of the same financial fact do not supply independent observations. Retain the one-second client p95 budget and estimate the selective policy’s own coverage, review time and expected cost before changing release policy.

@@ -1,0 +1,56 @@
+{
+  "source_query": "WITH q AS (\n SELECT n.adsh,count(DISTINCT n.qtrs) AS durations,\n max(value) FILTER(WHERE qtrs=1 AND uom='USD') AS quarter_value,\n max(value) FILTER(WHERE qtrs=2 AND uom='USD') AS half_year_value\n FROM num n JOIN sub s USING(adsh)\n WHERE s.form='10-Q' AND n.tag='NetIncomeLoss' AND n.ddate=s.period AND n.coreg IS NULL GROUP BY n.adsh)\nSELECT (SELECT count(*) FROM sub WHERE form='10-Q') AS all_quarterly,\n count(*) AS eligible, count(*) FILTER(WHERE durations>1) AS multiple_durations,\n count(*) FILTER(WHERE quarter_value IS NOT NULL AND half_year_value IS NOT NULL) AS both_usd_periods,\n count(*) FILTER(WHERE quarter_value<>half_year_value) AS different_usd_values FROM q",
+  "filings": {
+    "all_quarterly": 19223,
+    "eligible": 17312,
+    "multiple_durations": 11365,
+    "both_usd_periods": 5663,
+    "different_usd_values": 5647
+  },
+  "sum_units_in_rd1_data_checks_json": 20342,
+  "benchmark": {
+    "changed": 10,
+    "sampled_net_income_fiscal_or_quarter": 24,
+    "total": 151
+  },
+  "notebook_mapper": {
+    "notebook_sha256": "53bf6a919db1db636a1a20492231ec570e1cfb4468f8bc12503cf8e61afd83a8",
+    "cell": 16,
+    "method": "Unmodified notebook cell through mapper_co construction, before evaluate, using the package prepared inputs and seed 3217; elapsed includes vocabulary, vectors, company split and index. Original displayed timer starts after shared vector preparation and includes scoring.",
+    "fit_seconds": 4.47358454100322,
+    "top5": 0.6054131054131054,
+    "top1": 0.3247863247863248,
+    "rows": 702,
+    "saved_notebook_printout_seconds": 7,
+    "student_original_session_printout_seconds": 2,
+    "timing_scope_note": "Both printed times start after vocabulary/vector preparation and include the accuracy evaluation. The diary compares the separately timed original construction (4.47 s on the Mac) and saved fresh package construction (6.32 s in Linux). Hardware and environment differ. Timing differences do not establish a speed improvement.",
+    "replay_steps": [
+      "Read original Task 08 notebook cell 16 (zero-based index), verify source file SHA-256 before execution.",
+      "Open the configured four-quarter warehouse; load cached line items and silver labels. Use numpy.default_rng(3217) for rng.",
+      "Start perf_counter immediately before executing the original cell source up to, but excluding, res_map = evaluate(mapper_co, test_co). Stop after mapper_co is constructed.",
+      "Run the original evaluate(mapper_co, test_co) separately; report the combined mapper row and number of test tags."
+    ]
+  },
+  "release_policy": {
+    "shown": 130,
+    "wrong": 2,
+    "refer": 21,
+    "n": 151,
+    "cost_per_review_eur": 23.333333333333332,
+    "exact_one_sided_95_upper_error_given_shown": 0.047635194153728945,
+    "review_all": 700,
+    "show_all": 892.0529801324503,
+    "upper_cost": 2557.9769165502366,
+    "break_even_cost_per_error": 1516.6666666666667,
+    "independent_zero_error_sample_for_1pct": 299,
+    "upper_rate_zero_of_300": 0.00993608194445772
+  },
+  "duration_pair_crosscheck": {
+    "sql": "WITH f AS (\nSELECT n.adsh, n.qtrs, n.value FROM num n JOIN sub s USING(adsh)\nWHERE s.form='10-Q' AND n.tag='NetIncomeLoss' AND n.ddate=s.period AND n.coreg IS NULL\nAND n.uom='USD' AND n.qtrs IN (1,2))\nSELECT count(DISTINCT a.adsh) AS filings_with_both_tags,\ncount(DISTINCT a.adsh) FILTER (WHERE a.value IS NOT NULL AND b.value IS NOT NULL) AS both_with_values,\ncount(DISTINCT a.adsh) FILTER (WHERE a.value<>b.value) AS different_values\nFROM f a JOIN f b USING(adsh) WHERE a.qtrs=1 AND b.qtrs=2",
+    "result": {
+      "filings_with_both_tags": 5667,
+      "both_with_values": 5663,
+      "different_values": 5647
+    }
+  }
+}

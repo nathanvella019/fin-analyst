@@ -1,4 +1,12 @@
-# Grafana monitoring run
+# Grafana monitoring runs
+
+## Clean checkout used for the revised diary
+
+The later test rebuilt the API from clean commit `4c9381e` in an isolated local Compose project. The API reported the same revision and the load client recorded a clean checkout. Sixty warm requests, ten seconds apart, gave 186.6 ms client p95 and 180.4 ms inside the API. All 60 cases went to review. There were 58 correct candidates, 62.3 characters per question on average and zero server or audit-write errors. With 60 timings the nearest-rank p95 is the fourth slowest. Image size was 1,203,940,594 bytes. The pinned requirements layer accounts for 762 MB according to Docker image history.
+
+[Measured run and Grafana checks](rd1-clean-monitoring.json) · [60 requests](rd1-clean-monitoring-requests.csv) · [Dashboard screenshot](rd1-clean-grafana.png) · [Subsequent demonstration response](rd1-recorded-demo.json). The separate demo request was made after the fixed measurement window.
+
+## Earlier working-copy run
 
 On 20 November 2026, the API, Prometheus and Grafana ran together on Nathan’s Mac. The test sent 60 benchmark questions, one every ten seconds, to represent an assumed busy period with six analysts each asking once a minute. The service was already running when the test started. Startup and analyst review time are outside the timings.
 
