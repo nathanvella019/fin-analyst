@@ -1,5 +1,9 @@
 # Financial Statement Analyst
 
+[Run Prometheus and Grafana locally](docs/monitoring.md#prometheus-and-grafana). The same measurements that appear on the built-in dashboard are available as graphs over time in Grafana.
+
+**Current RD1 files.** [Word report](output/RD1-entry-1.docx) · [Written PDF](output/pdf/RD1-entry-1.pdf) · [Seven slides](output/pdf/RD1-slides.pdf) · [Voice-over visuals](output/RD1-voiceover-visuals.mp4) · [Timed recording guide](output/RD1-recording-guide.txt). Clean monitoring code `4c9381e`, review evidence `cdce639`. Nathan’s personal sign-off and narration remain.
+
 [Six-task review, 19 November](docs/rd1-checklist.md). All ten local tests passed. The written preview now shows three distinct numbered data traps and the extra row-order finding.
 
 ## RD1 written preview · 19 November 2026

@@ -1,5 +1,7 @@
 # RD1 remaining checklist
 
+**Latest RD1 review.** [Written PDF](../output/pdf/RD1-entry-1.pdf), [editable Word report](../output/RD1-entry-1.docx), [seven slides](../output/pdf/RD1-slides.pdf) and [recording guide](../output/RD1-recording-guide.txt). The clean run used 4c9381e and the evidence checkpoint is cdce639. Nathan’s final read-through, narration and submission remain.
+
 ## Six-task review · 19 November 2026
 
 Deadline: Monday 23 November 2026. The six investigations have evidence. Nathan’s review of the reflection, the final written PDF, slides and video are still pending.
