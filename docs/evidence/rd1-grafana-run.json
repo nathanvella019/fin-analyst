@@ -1,0 +1,190 @@
+{
+  "run": {
+    "server_before": {
+      "version": "0.1.0",
+      "model_identity": {
+        "package_version": "0.1.0",
+        "code_revision": "unknown",
+        "source_sha256": "7608fb4d7181d093b087c74060386586f16f01264759a5b3e5870a360c6f433a",
+        "config_sha256": "4d234d4e84c225adbed1d32f9dc22c0bf33124b120a1083d7b4b6ad9048652aa",
+        "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4"
+      },
+      "session_started_utc": "2026-11-20T08:23:16.627810+00:00",
+      "uptime_seconds": 19.845229134999997,
+      "requests": 0,
+      "http_status_counts": {},
+      "candidate_status_counts": {},
+      "referrals": 0,
+      "server_errors": 0,
+      "log_write_errors": 0,
+      "latency_window_requests": 0,
+      "latency_window_limit": 1000,
+      "p95_seconds": null,
+      "mean_question_chars": null,
+      "question_length_samples": 0,
+      "scope": "POST /ask only; counters reset on restart; metadata file persists",
+      "accuracy": "Unknown online: a reviewed reference answer is required"
+    },
+    "started_utc": "2026-11-20T08:23:36.454179+00:00",
+    "base_commit": "3c9c043ff90efbdb8af2c3ab310c6ea7e8e677bf",
+    "working_tree_dirty": true,
+    "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4",
+    "configuration": {
+      "url": "http://127.0.0.1:8008",
+      "requests": 60,
+      "rate_per_hour": 360.0,
+      "phrasing": "question",
+      "label": "grafana-peak"
+    },
+    "requests": 60,
+    "elapsed_seconds": 590.1032021659194,
+    "p50_seconds": 0.10848529194481671,
+    "p95_seconds": 0.1857291660271585,
+    "max_seconds": 0.33990066696424037,
+    "max_schedule_delay_seconds": 0.006941374973393977,
+    "http_status_counts": {
+      "200": 60
+    },
+    "client_errors": 0,
+    "correct_candidates": 58,
+    "human_referrals": 60,
+    "families": {
+      "point": 18,
+      "fiscal": 15,
+      "count": 9,
+      "sum": 6,
+      "rank": 6,
+      "quarter": 6
+    },
+    "scope": "Already-ready local service; includes HTTP round trip; excludes startup. Per-request HTTP connections. Four-client dispatch bound; delays recorded.",
+    "server_after": {
+      "version": "0.1.0",
+      "model_identity": {
+        "package_version": "0.1.0",
+        "code_revision": "unknown",
+        "source_sha256": "7608fb4d7181d093b087c74060386586f16f01264759a5b3e5870a360c6f433a",
+        "config_sha256": "4d234d4e84c225adbed1d32f9dc22c0bf33124b120a1083d7b4b6ad9048652aa",
+        "gold_sha256": "d9687a7d2ce416a9df0a30141527ade4dbb474294eaeb52188eacdddee12a2d4"
+      },
+      "session_started_utc": "2026-11-20T08:23:16.627810+00:00",
+      "uptime_seconds": 609.9912475289999,
+      "requests": 60,
+      "http_status_counts": {
+        "200": 60
+      },
+      "candidate_status_counts": {
+        "answered": 58,
+        "no rows": 2
+      },
+      "referrals": 60,
+      "server_errors": 0,
+      "log_write_errors": 0,
+      "latency_window_requests": 60,
+      "latency_window_limit": 1000,
+      "p95_seconds": 0.18038874999999166,
+      "mean_question_chars": 62.28333333333333,
+      "question_length_samples": 60,
+      "scope": "POST /ask only; counters reset on restart; metadata file persists",
+      "accuracy": "Unknown online: a reviewed reference answer is required"
+    },
+    "same_server_session": true
+  },
+  "grafana_history": {
+    "fin_analyst_requests_total": {
+      "samples": 124,
+      "first": [
+        1795163001.454,
+        "0"
+      ],
+      "last": [
+        1795163616.454,
+        "60"
+      ],
+      "minimum": 0.0,
+      "maximum": 60.0
+    },
+    "fin_analyst_referrals_total": {
+      "samples": 124,
+      "first": [
+        1795163001.454,
+        "0"
+      ],
+      "last": [
+        1795163616.454,
+        "60"
+      ],
+      "minimum": 0.0,
+      "maximum": 60.0
+    },
+    "fin_analyst_server_errors_total": {
+      "samples": 124,
+      "first": [
+        1795163001.454,
+        "0"
+      ],
+      "last": [
+        1795163616.454,
+        "0"
+      ],
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "fin_analyst_log_write_errors_total": {
+      "samples": 124,
+      "first": [
+        1795163001.454,
+        "0"
+      ],
+      "last": [
+        1795163616.454,
+        "0"
+      ],
+      "minimum": 0.0,
+      "maximum": 0.0
+    },
+    "fin_analyst_request_p95_seconds": {
+      "samples": 120,
+      "first": [
+        1795163021.454,
+        "0.06888141600001063"
+      ],
+      "last": [
+        1795163616.454,
+        "0.18038874999999166"
+      ],
+      "minimum": 0.06888141600001063,
+      "maximum": 0.3327026669999782
+    },
+    "fin_analyst_question_mean_chars": {
+      "samples": 120,
+      "first": [
+        1795163021.454,
+        "72"
+      ],
+      "last": [
+        1795163616.454,
+        "62.28333333333333"
+      ],
+      "minimum": 61.2,
+      "maximum": 72.0
+    },
+    "up{job=\"financial-analyst\"}": {
+      "samples": 125,
+      "first": [
+        1795162996.454,
+        "0"
+      ],
+      "last": [
+        1795163616.454,
+        "1"
+      ],
+      "minimum": 0.0,
+      "maximum": 1.0
+    }
+  },
+  "dashboard_url": "http://127.0.0.1:3000/d/financial-analyst?from=1795162996454&to=1795163616557",
+  "api_image": "sha256:84279401fe2e05f1ad9bfd61c7c0658921d990a1aaf5af16621e77998060d176",
+  "api_image_bytes": 1203941285,
+  "prometheus_image": "prom/prometheus:v3.13.4",
+  "grafana_image": "grafana/grafana:13.2.4"
+}

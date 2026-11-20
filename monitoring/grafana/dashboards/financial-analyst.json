@@ -1,0 +1,223 @@
+{
+  "uid": "financial-analyst",
+  "title": "Financial Analyst Service",
+  "editable": false,
+  "schemaVersion": 39,
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "refresh": "10s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Requests since API start",
+      "description": "Count of completed POST /ask requests.",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "fin-analyst-prometheus"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "fin_analyst_requests_total",
+          "legendFormat": "Requests since API start"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Referrals since API start",
+      "description": "Questions sent for human review.",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "fin-analyst-prometheus"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "fin_analyst_referrals_total",
+          "legendFormat": "Referrals since API start"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Application p95 response time",
+      "description": "Rolling p95 over the most recent 1,000 requests. Measured inside the API, before writing the audit log.",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "fin-analyst-prometheus"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 7
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "fin_analyst_request_p95_seconds",
+          "legendFormat": "Application p95 response time"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Average question length",
+      "description": "Characters per validated question, averaged across the most recent 1,000 requests.",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "fin-analyst-prometheus"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 7
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "fin_analyst_question_mean_chars",
+          "legendFormat": "Average question length"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Server errors since API start",
+      "description": "HTTP 5xx responses from POST /ask.",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "fin-analyst-prometheus"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 14
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "fin_analyst_server_errors_total",
+          "legendFormat": "Server errors since API start"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Audit write errors since API start",
+      "description": "Failed writes to the persistent request log.",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "fin-analyst-prometheus"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 14
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "showLegend": false
+        }
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "fin_analyst_log_write_errors_total",
+          "legendFormat": "Audit write errors since API start"
+        }
+      ]
+    }
+  ]
+}

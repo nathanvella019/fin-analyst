@@ -1,5 +1,33 @@
 # Using the monitoring dashboard
 
+## Prometheus and Grafana
+
+The API counts and times every `POST /ask`. Prometheus reads those totals and measurements every five seconds. Grafana queries Prometheus to draw the graphs. For example, when a request is referred, the API increases its counter by one. The next collection sees the new total, and the next dashboard refresh shows the rise.
+
+From `fin-analyst`, start Docker Desktop and run:
+
+```sh
+docker compose --profile monitoring up --build -d --wait
+```
+
+1. Open [Prometheus targets](http://127.0.0.1:9090/targets). The `financial-analyst` target should show **UP** once the API is ready. Prometheus reads `/metrics/prometheus` every five seconds and keeps the time series in a Docker volume.
+2. Open [Financial Analyst Service in Grafana](http://127.0.0.1:3000/d/financial-analyst). The project supplies the dashboard and its connection to Prometheus. The local dashboard opens with viewer access.
+3. Send a question from the [API form](http://127.0.0.1:8008/docs), then wait for the next Grafana refresh. Requests and referrals go up. The p95 and question-length panels first receive a value after a request supplies the relevant data.
+
+For the same 60-question workload used in the earlier RD1 run, activate the project virtual environment and run:
+
+```sh
+python3 scripts/measure_api.py --label grafana-peak --requests 60 --rate-per-hour 360
+```
+
+The run takes about ten minutes and saves its client timings in `data/evaluation/api_grafana-peak/`. Grafana graphs the API's rolling p95 over the most recent 1,000 requests. The client script measures the full round trip for its 60 requests. Each graph point in Grafana is a snapshot of the API measurements at the time Prometheus collected them. Start a new API session if you want the rolling p95 to cover only your test.
+
+Stop the stack with `docker compose --profile monitoring down`. Logs, stored measurements and Grafana state persist in their Docker volumes. The two monitoring ports bind to the Mac's loopback address.
+
+The [20 November run](evidence/rd1-grafana.md) includes the measured graph, timings and request results.
+
+## Built-in dashboard
+
 The dashboard tells us what the running program is doing. Open http://localhost:8008/monitor alongside http://localhost:8008/docs. Send a question in `/docs` and return to the dashboard. It updates every five seconds.
 
 | Number | Meaning |

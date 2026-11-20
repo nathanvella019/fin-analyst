@@ -60,7 +60,7 @@ def main():
     parser.add_argument("--rate-per-hour", type=float, default=0,
                         help="0 = sequential functional sweep; >0 = scheduled arrivals")
     parser.add_argument("--phrasing", choices=["question", "held_out"], default="question")
-    parser.add_argument("--label", required=True, choices=["development", "held-out", "paced", "rd1-peak"])
+    parser.add_argument("--label", required=True, choices=["development", "held-out", "paced", "rd1-peak", "grafana-peak"])
     args = parser.parse_args()
     if args.requests < 1 or args.rate_per_hour < 0:
         parser.error("requests must be positive and rate cannot be negative")

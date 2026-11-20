@@ -32,6 +32,11 @@ class APITests(unittest.TestCase):
             self.assertEqual(metrics['http_status_counts'],{'422':5,'200':1})
             self.assertEqual(metrics['referrals'],1)
             self.assertEqual(metrics['question_length_samples'],1)
+            exposition = client.get('/metrics/prometheus')
+            self.assertEqual(exposition.status_code, 200)
+            self.assertIn('version=0.0.4', exposition.headers['content-type'])
+            self.assertIn('fin_analyst_requests_total 6\n', exposition.text)
+            self.assertIn('fin_analyst_question_mean_chars 16.0\n', exposition.text)
             self.assertIn('Financial Analyst monitoring',client.get('/monitor').text)
             records=[json.loads(line) for line in (Path(folder)/'requests.jsonl').read_text().splitlines()]
             self.assertEqual(len(records),6)

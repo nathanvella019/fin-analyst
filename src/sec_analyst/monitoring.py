@@ -84,6 +84,25 @@ class RequestMonitor:
                 "accuracy": "Unknown online: a reviewed reference answer is required",
             }
 
+    def prometheus_text(self):
+        """Publish the same request measurements in Prometheus text format."""
+        snapshot = self.snapshot()
+        metrics = (
+            ("requests_total", "counter", "requests", "Completed POST /ask requests."),
+            ("referrals_total", "counter", "referrals", "Requests referred for review."),
+            ("server_errors_total", "counter", "server_errors", "Requests with HTTP 5xx status."),
+            ("log_write_errors_total", "counter", "log_write_errors", "Failed audit log writes."),
+            ("request_p95_seconds", "gauge", "p95_seconds", "Application p95 over the last 1000 requests."),
+            ("question_mean_chars", "gauge", "mean_question_chars", "Mean validated question length in the last 1000 requests."),
+        )
+        lines = []
+        for name, kind, key, description in metrics:
+            value = snapshot[key]
+            if value is not None:
+                metric = f"fin_analyst_{name}"
+                lines.extend((f"# HELP {metric} {description}", f"# TYPE {metric} {kind}", f"{metric} {value}"))
+        return "\n".join(lines) + "\n"
+
 
 DASHBOARD = """<!doctype html>
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">

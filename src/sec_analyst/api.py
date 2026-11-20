@@ -10,7 +10,7 @@ import time
 from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from pydantic import BaseModel, ConfigDict, Field
 import yaml
 
@@ -123,6 +123,13 @@ def create_app(runtime_factory=None, log_dir=None):
     @application.get("/metrics")
     def metrics():
         return application.state.monitor.snapshot()
+
+    @application.get("/metrics/prometheus", include_in_schema=False)
+    def prometheus_metrics():
+        return Response(
+            content=application.state.monitor.prometheus_text(),
+            media_type="text/plain; version=0.0.4",
+        )
 
     @application.get("/monitor", response_class=HTMLResponse)
     def monitor():
