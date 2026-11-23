@@ -1,0 +1,30 @@
+{
+  "experiment_id": "1",
+  "holdout_sha256": "31a122ebcd820e23638ee1fb22ae24cedaef2b66db71728d39623eb30887d203",
+  "runs": [
+    {
+      "split": "random-company",
+      "run_id": "6f7618565ae94edea3d5b099c1562dde",
+      "commit": "6a1eac97fd80c885b95c49464071dc0a243f64a0",
+      "training_inputs_sha256": "5a49642f9dc8df968e5e67d413343152f96382025c65cb85b9917c34383a5dc3",
+      "shared_correct": 200,
+      "shared_count": 345,
+      "shared_top5": 0.5797101449275363,
+      "test_correct": 424,
+      "test_count": 702,
+      "test_top5": 0.603988603988604
+    },
+    {
+      "split": "forward-Q1",
+      "run_id": "7cdcc1f4615946c29634af72a9db2d67",
+      "commit": "6a1eac97fd80c885b95c49464071dc0a243f64a0",
+      "training_inputs_sha256": "2a3f0907fee6993cddb6a53a4a77a81a7946b5e1d48496c14a6a8609de1fbcf7",
+      "shared_correct": 201,
+      "shared_count": 345,
+      "shared_top5": 0.5826086956521739,
+      "test_correct": 201,
+      "test_count": 345,
+      "test_top5": 0.5826086956521739
+    }
+  ]
+}

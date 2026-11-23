@@ -1,6 +1,6 @@
 # 0011 — How we will compare the random and forward mapper splits
 
-Nathan approved decisions 1–9 on 23 November 2026. The complete plan is ready for review before implementation.
+Nathan approved decisions 1–9 on 23 November 2026. Nathan subsequently approved implementation. [Task 1 results](../evidence/rd2/task-1.md) record both completed runs.
 
 | Decision | What we agreed and why |
 |---|---|
@@ -14,7 +14,7 @@ Nathan approved decisions 1–9 on 23 November 2026. The complete plan is ready 
 | 8. Stop on a fingerprint mismatch | Verify the file before scoring. If it changes, stop and report the mismatch. For an intentional correction, keep the original, save a new version and document why. |
 | 9. Track each fitted mapper separately | Use one local MLflow run per fit. Log the Git commit, learning window, company split, training-input and test-set fingerprints, number correct and number tested. The full-year run records both its full test score and its score on the shared later cases. The Q1 run records its score on those same later cases. |
 
-## Implementation plan awaiting approval
+## Approved implementation plan
 
 1. Recreate the seeded company split, verify the case counts, and freeze the later test cases before fitting either mapper.
 2. Set up local MLflow tracking and verify the holdout fingerprint before scoring.
