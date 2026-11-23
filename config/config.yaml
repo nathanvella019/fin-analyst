@@ -18,3 +18,9 @@ questions_per_week: 150
 analyst_min_per_question: 20
 analyst_cost_per_hour_eur: 70.0
 wrong_number_cost_eur: 2000.0
+
+rd2:
+  holdout_start: "2016-04-01"
+  holdout_end: "2016-12-31"
+  holdout_file: docs/evidence/rd2/mapper-holdout-v1.csv
+  holdout_sha256: "31a122ebcd820e23638ee1fb22ae24cedaef2b66db71728d39623eb30887d203"
