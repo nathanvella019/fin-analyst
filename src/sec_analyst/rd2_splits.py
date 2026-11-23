@@ -102,6 +102,7 @@ def run_fit(settings, quarters, held, cases, later, mode, revision, experiment):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=["freeze", "score"])
+    parser.add_argument("--report", type=Path, help="Write fresh score results at this path")
     args = parser.parse_args()
     settings = yaml.safe_load(Path("config/config.yaml").read_text())
     cfg = settings["rd2"]
@@ -144,7 +145,8 @@ def main():
                                  ("forward-Q1", early, later)]:
         results.append(run_fit(settings, quarters, held, test, later, mode, revision, experiment))
     report = {"experiment_id": experiment, "holdout_sha256": digest(frozen), "runs": results}
-    (path.parent / "split-results.json").write_text(json.dumps(report, indent=2) + "\n")
+    destination = args.report or path.parent / "split-results.json"
+    destination.write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report, indent=2))
 
 

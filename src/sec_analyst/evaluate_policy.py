@@ -15,7 +15,7 @@ from sec_analyst.service import RUNGS, QuestionService, correct
 from sec_analyst.warehouse import connect_warehouse
 
 
-def main() -> None:
+def main(output_dir: Path | None = None) -> None:
     settings = yaml.safe_load(Path("config/config.yaml").read_text())
     fixture = Path("tests/fixtures/golden_questions.parquet")
     gold = pd.read_parquet(fixture)
@@ -25,7 +25,7 @@ def main() -> None:
         raise ValueError("Golden questions differ from their recorded fingerprint")
 
     processed = Path(settings["processed_dir"])
-    output = processed.parent / "evaluation"
+    output = output_dir or processed.parent / "evaluation"
     output.mkdir(parents=True, exist_ok=True)
     with connect_warehouse(processed, settings["quarters"]) as connection:
         prepare_line_items(connection, processed)

@@ -12,8 +12,12 @@ IDENTITIES = {
 }
 def identity_check(connection, total, plus, minus, qtrs):
     tags = [total] + plus + minus
+    columns = ", ".join(
+        f"""max(CASE WHEN n.tag = '{tag}' THEN n.value END) AS "{tag}" """
+        for tag in tags
+    )
     w = connection.execute(f"""
-        SELECT n.adsh, n.ddate, n.qtrs, {', '.join(f"max(CASE WHEN n.tag = '{t}' THEN n.value END) AS \"{t}\"" for t in tags)}
+        SELECT n.adsh, n.ddate, n.qtrs, {columns}
         FROM num n JOIN sub s USING (adsh)
         WHERE n.tag IN ({', '.join(f"'{t}'" for t in tags)}) AND n.coreg IS NULL AND n.uom = 'USD' AND s.form IN ('10-K', '10-Q')
           AND n.ddate = s.period {'' if qtrs is None else f'AND n.qtrs = {qtrs}'}
