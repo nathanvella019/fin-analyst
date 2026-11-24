@@ -1,0 +1,114 @@
+{
+  "registered_model": "sec-standard-tag-mapper",
+  "holdout_sha256": "31a122ebcd820e23638ee1fb22ae24cedaef2b66db71728d39623eb30887d203",
+  "runs": [
+    {
+      "id": "7544afb5e79542c0907469a0bfda8024",
+      "artifact": "models:/m-cb06b2f21fa5460c83d2d1664db441a5",
+      "parameters": {
+        "git_commit": "32d16c6c68d775ac5991eca6ffe5c7b6c29b4af3",
+        "window": "february",
+        "cutoff": "2016-02-29",
+        "first_filing": "2016-01-04",
+        "last_filing": "2016-02-29",
+        "training_filings": "3258",
+        "training_inputs_sha256": "e532b7286b4c123e060b16510bcf471726bfd22bc33c9a5c7ba1d79885a46e9b",
+        "holdout_sha256": "31a122ebcd820e23638ee1fb22ae24cedaef2b66db71728d39623eb30887d203",
+        "holdout_start": "2016-04-01",
+        "held_companies": "486",
+        "held_company_ids_sha256": "06625079b7ce0732af7fe05447f5cdea043ad3917fbf46b3b78f56b9771a33f8",
+        "seed": "3217",
+        "k": "5",
+        "ngram_range": "1,2",
+        "signals": "taxonomy,labels",
+        "repeat": "False",
+        "rankings_sha256": "9f38e54328541a90e705bba121db190f31bc6b0c75195e24fd00d34c42e7e7c3"
+      },
+      "metrics": {
+        "cases": 345.0,
+        "top1_hits": 95.0,
+        "top5_hits": 191.0,
+        "top1": 0.2753623188405797,
+        "top5": 0.553623188405797
+      }
+    },
+    {
+      "id": "433508d40ff64b7a9beff45d995f7f96",
+      "artifact": "models:/m-7f625acbb4f34b7082a577e7d4a59e17",
+      "parameters": {
+        "git_commit": "32d16c6c68d775ac5991eca6ffe5c7b6c29b4af3",
+        "window": "march",
+        "cutoff": "2016-03-31",
+        "first_filing": "2016-01-04",
+        "last_filing": "2016-03-31",
+        "training_filings": "6022",
+        "training_inputs_sha256": "2a3f0907fee6993cddb6a53a4a77a81a7946b5e1d48496c14a6a8609de1fbcf7",
+        "holdout_sha256": "31a122ebcd820e23638ee1fb22ae24cedaef2b66db71728d39623eb30887d203",
+        "holdout_start": "2016-04-01",
+        "held_companies": "486",
+        "held_company_ids_sha256": "06625079b7ce0732af7fe05447f5cdea043ad3917fbf46b3b78f56b9771a33f8",
+        "seed": "3217",
+        "k": "5",
+        "ngram_range": "1,2",
+        "signals": "taxonomy,labels",
+        "repeat": "False",
+        "rankings_sha256": "5dc3022f635d73c3f6b79054bf39eb4264dd21c0b0ac9f9877b3c5b59091cc30"
+      },
+      "metrics": {
+        "cases": 345.0,
+        "top1_hits": 115.0,
+        "top5_hits": 201.0,
+        "top1": 0.3333333333333333,
+        "top5": 0.5826086956521739
+      }
+    },
+    {
+      "id": "9e9bc1fbf997480ba1be2e4189404a4b",
+      "artifact": "models:/m-f38da977578e42ef94bcf8dee680ea5e",
+      "parameters": {
+        "git_commit": "32d16c6c68d775ac5991eca6ffe5c7b6c29b4af3",
+        "window": "march",
+        "cutoff": "2016-03-31",
+        "first_filing": "2016-01-04",
+        "last_filing": "2016-03-31",
+        "training_filings": "6022",
+        "training_inputs_sha256": "2a3f0907fee6993cddb6a53a4a77a81a7946b5e1d48496c14a6a8609de1fbcf7",
+        "holdout_sha256": "31a122ebcd820e23638ee1fb22ae24cedaef2b66db71728d39623eb30887d203",
+        "holdout_start": "2016-04-01",
+        "held_companies": "486",
+        "held_company_ids_sha256": "06625079b7ce0732af7fe05447f5cdea043ad3917fbf46b3b78f56b9771a33f8",
+        "seed": "3217",
+        "k": "5",
+        "ngram_range": "1,2",
+        "signals": "taxonomy,labels",
+        "repeat": "True",
+        "rankings_sha256": "5dc3022f635d73c3f6b79054bf39eb4264dd21c0b0ac9f9877b3c5b59091cc30"
+      },
+      "metrics": {
+        "cases": 345.0,
+        "top1_hits": 115.0,
+        "top5_hits": 201.0,
+        "top1": 0.3333333333333333,
+        "top5": 0.5826086956521739
+      }
+    }
+  ],
+  "alias_checks": [
+    {
+      "action": "select",
+      "version": 2,
+      "rankings_sha256": "5dc3022f635d73c3f6b79054bf39eb4264dd21c0b0ac9f9877b3c5b59091cc30"
+    },
+    {
+      "action": "roll back",
+      "version": 1,
+      "rankings_sha256": "9f38e54328541a90e705bba121db190f31bc6b0c75195e24fd00d34c42e7e7c3"
+    },
+    {
+      "action": "restore",
+      "version": 2,
+      "rankings_sha256": "5dc3022f635d73c3f6b79054bf39eb4264dd21c0b0ac9f9877b3c5b59091cc30"
+    }
+  ],
+  "cases_checked_per_reload": 345
+}
