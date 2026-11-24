@@ -9,6 +9,30 @@ from sec_analyst.concepts import CONCEPTS
 from sec_analyst.service import RUNGS
 
 
+def passes_filing_filter(connection, parsed, candidate, flags):
+    """Require the issuer's own income statement to support a revenue candidate."""
+    if not flags["answered"] or flags["via_mapper"] or not flags["single_candidate"]:
+        return False
+    if parsed.get("concept") != "Revenue":
+        return True
+    provenance = candidate.get("provenance")
+    if not provenance:
+        return False
+    filing, tag, date, quarters = provenance[:4]
+    # A broad heading such as "Net sales" can support total revenue.
+    # A narrower heading such as "Product sales" cannot establish the total.
+    lines = connection.execute("""
+        SELECT DISTINCT p.tag, n.value
+        FROM pre p
+        LEFT JOIN num n ON n.adsh = p.adsh AND n.tag = p.tag AND n.version = p.version
+            AND n.ddate = ? AND n.qtrs = ? AND n.coreg IS NULL AND n.uom = 'USD'
+        WHERE p.adsh = ? AND p.stmt = 'IS' AND p.inpth = 0
+          AND regexp_full_match(lower(trim(p.plabel)),
+              '(total )?(net )?(operating )?(revenue|revenues|sales)(,? net)?')
+    """, [date, quarters, filing]).fetchall()
+    return lines == [(tag, candidate["value"])]
+
+
 def signals(service, question):
     """Look for warning signs without using the reference answer."""
     parsed = service.parser.parse(question)

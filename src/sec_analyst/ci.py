@@ -9,6 +9,7 @@ from tempfile import TemporaryDirectory
 
 import pandas as pd
 import yaml
+import mlflow
 
 from sec_analyst.evaluate_policy import main as evaluate_policy
 from sec_analyst.golden import golden_fingerprint
@@ -44,11 +45,11 @@ def gate(settings):
         evaluate_policy(work)
         answers = pd.read_csv(work / "policy_answers.csv")
         original = answers[answers.phrasing == "question"]
-        wrong = answers[answers.verified & ~answers.correct]
+        wrong = answers[answers.filing_verified & ~answers.correct]
         by_family = answers.assign(
             wrong_number=answers.answered & ~answers.correct,
             no_answer=~answers.answered,
-            wrong_verified=answers.verified & ~answers.correct,
+            wrong_verified=answers.filing_verified & ~answers.correct,
         ).groupby(["phrasing", "family"]).agg(
             cases=("correct", "size"),
             correct=("correct", "sum"),
@@ -75,7 +76,37 @@ def gate(settings):
         print(f"{'FAIL' if len(wrong) else 'PASS'}  Wrong verified answers: {len(wrong)} (allowed 0)")
         for row in wrong.itertuples():
             print(f"  {row.phrasing}: {row.question} | returned {row.service:g}, expected {row.golden:g}")
-        return passed and wrong.empty
+        coverage = answers.groupby("phrasing").filing_verified.sum()
+        print("Answers passing the filing filter by wording:", coverage.to_dict())
+        has_coverage = all(coverage.get(key, 0) > 0 for key in ("question", "held_out"))
+        if not has_coverage:
+            print("FAIL  No verified answers in at least one wording")
+        accepted = passed and wrong.empty and has_coverage
+        # Keep the answer-policy evaluation separate from the two mapper fits.
+        tracking = Path("data/rd2-tracking").resolve()
+        mlflow.set_tracking_uri(f"sqlite:///{tracking / 'mlflow.db'}")
+        experiment_name = "RD2 CI release gate"
+        experiment = mlflow.get_experiment_by_name(experiment_name)
+        eid = experiment.experiment_id if experiment else mlflow.create_experiment(
+            experiment_name, artifact_location=(tracking / "gate-artifacts").as_uri())
+        with mlflow.start_run(experiment_id=eid, run_name="filing-check") as run:
+            revision = runs["forward-Q1"]["commit"]
+            metrics = json.loads((work / "policy_metrics.json").read_text())
+            mlflow.set_tag("mlflow.source.git.commit", revision)
+            mlflow.log_params({"git_commit": revision, "gold_sha256": metrics["gold_sha256"],
+                               "holdout_sha256": settings["rd2"]["holdout_sha256"],
+                               "forward_floor": settings["rd2"]["forward_top5_floor"],
+                               "forward_fit": runs["forward-Q1"]["run_id"],
+                               "company_fit": runs["random-company"]["run_id"]})
+            mlflow.log_metrics({"gate_passed": int(accepted), "wrong_verified": len(wrong),
+                                "wrong_notebook_verified": metrics["wrong_verified_answers"],
+                                "original_accuracy": original.correct.mean(),
+                                "forward_top5": runs["forward-Q1"]["shared_top5"],
+                                "company_top5": runs["random-company"]["test_top5"]})
+            mlflow.log_artifact(str(work / "policy_answers.csv"))
+            mlflow.log_artifact(str(work / "policy_comparison.csv"))
+            print("MLflow gate run:", run.info.run_id)
+        return accepted
 
 
 def main():

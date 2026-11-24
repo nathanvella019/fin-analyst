@@ -18,7 +18,7 @@ from sec_analyst.custom_map import prepare_custom_map
 from sec_analyst.mapper import TagMapper
 from sec_analyst.mapper_data import prepare_line_items
 from sec_analyst.monitoring import DASHBOARD, RequestMonitor
-from sec_analyst.policy import signals
+from sec_analyst.policy import passes_filing_filter, signals
 from sec_analyst.provenance import model_identity
 from sec_analyst.service import QuestionService
 from sec_analyst.warehouse import connect_warehouse
@@ -71,6 +71,7 @@ class AnalystRuntime:
                 "candidate": candidate,
                 "signals": flags,
                 "passes_notebook_filter": screened,
+                "passes_filing_filter": passes_filing_filter(self.connection, parsed, candidate, flags),
                 "verification": verification,
                 "version": version("fin-analyst"),
                 "mode": "review_only",
