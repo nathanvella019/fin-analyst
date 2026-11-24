@@ -9,9 +9,9 @@ The Q1 mapper ranked five tags for each of the 345 frozen April–December cases
 
 In 86 cases the expected tag ranked second through fifth. The combined option improved top-five by 14.78 percentage points over taxonomy alone. The paired 95% interval for that improvement was 10.26–19.43 percentage points. Each of 10,000 draws sampled 278 companies with replacement, kept every selected company's cases together and computed tag-level rates using the resulting number of cases as denominator. Both scoring options used identical draws (seed 3217). Intervals use the 2.5th and 97.5th percentiles. They describe variability across companies in this retrospective holdout, conditional on the fixed Q1 fit and inferred labels.
 
-## Threshold for review
+## Approved threshold
 
-Applying the rule proposed before measurement gives a forward top-five floor of 0.5266106442577031 (at least 182 hits on 345 cases). The current provisional 56.8% floor requires 196 hits. Adopting the proposal would allow 182–195 hits to pass this forward check. This operational trade-off needs Nathan’s review. The task card’s separate 56.8% company-split floor and the whole-service rules still apply. FutureFuel remains a verified-answer failure.
+The forward top-five floor is 0.5266106442577031. On 345 cases this requires 182 hits. The provisional floor required 196. The full-year company split keeps its own 56.8% floor. [Decision and trade-offs](../../decisions/0012-forward-mapper-gate.md)
 
 ## Reproduce and trace
 

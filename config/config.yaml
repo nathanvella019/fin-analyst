@@ -20,6 +20,8 @@ analyst_cost_per_hour_eur: 70.0
 wrong_number_cost_eur: 2000.0
 
 rd2:
+  # ADR 0012. Lower endpoint measured on the frozen forward cases.
+  forward_top5_floor: 0.5266106442577031
   holdout_start: "2016-04-01"
   holdout_end: "2016-12-31"
   holdout_file: docs/evidence/rd2/mapper-holdout-v1.csv
