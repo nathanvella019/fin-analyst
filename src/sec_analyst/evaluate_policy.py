@@ -10,7 +10,7 @@ import yaml
 from sec_analyst.custom_map import prepare_custom_map
 from sec_analyst.golden import golden_fingerprint
 from sec_analyst.mapper_data import prepare_line_items
-from sec_analyst.policy import policy, signals
+from sec_analyst.policy import passes_filing_filter, policy, signals
 from sec_analyst.service import RUNGS, QuestionService, correct
 from sec_analyst.warehouse import connect_warehouse
 
@@ -36,10 +36,14 @@ def main(output_dir: Path | None = None) -> None:
             for row in gold.itertuples():
                 question = getattr(row, phrasing)
                 answer = service.answer(question, len(RUNGS) - 1)
+                flags = signals(service, question)
                 records.append({
                     "phrasing": phrasing,
                     "family": row.family,
-                    **signals(service, question),
+                    **flags,
+                    "filing_verified": passes_filing_filter(
+                        connection, service.parser.parse(question), answer, flags
+                    ),
                     "correct": correct(answer["value"], row.answer),
                     "question": question,
                     "golden": row.answer,
@@ -63,6 +67,7 @@ def main(output_dir: Path | None = None) -> None:
             ("analysts answer everything", pd.Series(False, index=group.index)),
             ("show every answer", group.answered),
             ("show verified answers, refer the rest", group.verified),
+            ("require filing support for revenue", group.filing_verified),
         ):
             policies.append({
                 "phrasing": phrasing,
@@ -79,6 +84,7 @@ def main(output_dir: Path | None = None) -> None:
         if 0 < break_even < 1 else None
     )
     wrong_verified = operations[operations.verified & ~operations.correct]
+    wrong_filing_verified = operations[operations.filing_verified & ~operations.correct]
     metrics = {
         "gold_sha256": fingerprint,
         "configuration": settings,
@@ -88,7 +94,9 @@ def main(output_dir: Path | None = None) -> None:
         "wrong_verified_answers": len(wrong_verified),
         "answers_with_restatement_flag": int((operations.answered & operations.restated).sum()),
         "answered": int(operations.answered.sum()),
-        "release_gate_no_wrong_verified_answer_passes": len(wrong_verified) == 0,
+        "notebook_filter_no_wrong_verified_answers": len(wrong_verified) == 0,
+        "wrong_filing_verified_answers": len(wrong_filing_verified),
+        "release_gate_no_wrong_verified_answer_passes": len(wrong_filing_verified) == 0,
         "cost_scope": "Notebook assumptions: analyst referrals and wrong numbers; excludes infrastructure costs.",
     }
     operations.to_csv(output / "policy_answers.csv", index=False)

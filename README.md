@@ -1,5 +1,15 @@
 # Financial Statement Analyst
 
+**RD2 Task 6.** The [March mapper model card](docs/model_card.md) is attached to registry version 2. The [student exchange guide](docs/evidence/rd2/task-6.md) records what remains before submission.
+
+**RD2 Task 5.** The March mapper triggered input reviews in Q3 and Q4. Only Q4 triggered an accuracy review. [Quarterly figure, tests and MLflow records](docs/evidence/rd2/task-5.md) · [Monitoring policy](docs/decisions/0015-quarterly-mapper-monitoring.md)
+
+**RD2 Task 4.** The local MLflow registry holds the February fallback and March champion. Three tracked builds and a verified rollback are recorded in the [Task 4 results and reproduction guide](docs/evidence/rd2/task-4.md).
+
+## RD2 release gate
+
+Each push runs `make ci` on GitHub. It checks the Python code, runs the unit tests, validates the frozen data and scores the model. On 345 later company tags the expected tag appeared in the first five suggestions 201 times. The forward gate requires 182. Separately, any wrong financial answer passing the filing verification rule blocks the build. The API still requires analyst review. [Task 3 results and CI runs](docs/evidence/rd2/task-3-measurement.md#release-gate-evidence) · [Threshold decision](docs/decisions/0012-forward-mapper-gate.md) · [Filing verification decision](docs/decisions/0013-check-the-filed-revenue-line.md)
+
 [Run Prometheus and Grafana locally](docs/monitoring.md#prometheus-and-grafana). The same measurements that appear on the built-in dashboard are available as graphs over time in Grafana.
 
 **Current RD1 files.** [Word report](output/RD1-entry-1.docx) · [Written PDF](output/pdf/RD1-entry-1.pdf) · [Seven slides](output/pdf/RD1-slides.pdf) · [Voice-over visuals](output/RD1-voiceover-visuals.mp4) · [Timed recording guide](output/RD1-recording-guide.txt). Clean monitoring code `4c9381e`, review evidence `cdce639`. Nathan’s personal sign-off and narration remain.

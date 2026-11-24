@@ -1,0 +1,26 @@
+{
+  "run_id": "d9a07fee6403432081c3fbb09125b8b0",
+  "git_commit": "4865f8fe4ad6afe7504e8bf446e730e9ff97b7e5",
+  "registered_model": "sec-standard-tag-mapper",
+  "version": 2,
+  "fit_run_id": "433508d40ff64b7a9beff45d995f7f96",
+  "training_inputs_sha256": "2a3f0907fee6993cddb6a53a4a77a81a7946b5e1d48496c14a6a8609de1fbcf7",
+  "holdout_sha256": "31a122ebcd820e23638ee1fb22ae24cedaef2b66db71728d39623eb30887d203",
+  "monitor_inputs_sha256": "f031edb370d2e71829332a7d2a09295a23b8e626d606dbfe610ccef6b044d243",
+  "reference_cases_sha256": "e26e28257b329d8f7a718c672f39414fe9434b4e6950cef55a56db4d3b0b9aea",
+  "accuracy_floor": 0.5266106442577031,
+  "bootstrap_draws": 10000,
+  "bootstrap_unit": "company",
+  "seed": 3217,
+  "reference_quarter": "2016q1",
+  "statement_mix_alert": 0.1,
+  "quarters_below_floor_to_retrain": 2,
+  "forward_hits": 201,
+  "forward_cases": 345,
+  "artifacts_sha256": {
+    "quarterly-monitoring.png": "7d42777bca726b4d1bfbe8f1cd602db9e0b027f480284e7b654e856c47f08c6a",
+    "quarterly.csv": "41059883e01148a8d90b3224947706d08f0893e38f89871b223fa08abf768369",
+    "statement-counts.csv": "0ef14089c18323fff09662736281aaaa9c89c4a3b6d40f8ba5f6961019a68147",
+    "taxonomy-counts.csv": "0bb29cd539f0438d4d000ccfdcc93af3969d46da398f25e430cc3dd303559642"
+  }
+}

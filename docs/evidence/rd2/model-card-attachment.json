@@ -1,0 +1,8 @@
+{
+  "registry_uri": "models:/sec-standard-tag-mapper/2",
+  "training_run": "433508d40ff64b7a9beff45d995f7f96",
+  "card_commit": "4783d8063f5e4bb54aa83e2e0856c80238e70405",
+  "card_sha256": "82e67532a9b8b6663c43eb0f6fcfa017326219e80b9f20c9d13b620d74ecd341",
+  "run_artifact": "model-cards/82e67532a9b8b6663c43eb0f6fcfa017326219e80b9f20c9d13b620d74ecd341/model_card.md",
+  "peer_review_status": "awaiting student exchange"
+}
