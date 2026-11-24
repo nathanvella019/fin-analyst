@@ -11,7 +11,7 @@ class QuarterlyMonitoringTests(unittest.TestCase):
         result = mix_distance(counts, "ref")
         self.assertEqual(result["ref"], 0)
         self.assertEqual(result["same"], 0)
-        self.assertAlmostEqual(result["new"], 0.10)
+        self.assertEqual(result["new"], 0.10)
         with self.assertRaises(ValueError):
             mix_distance(counts * 0, "ref")
 

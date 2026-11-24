@@ -6,7 +6,6 @@ import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-import matplotlib
 import mlflow
 import numpy as np
 import pandas as pd
@@ -17,18 +16,15 @@ from sec_analyst.rd2_splits import COLUMNS, csv_bytes, digest, split_cases, veri
 from sec_analyst.registered_mapper import FEATURES
 from sec_analyst.warehouse import connect_warehouse
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
-from matplotlib.ticker import PercentFormatter  # noqa: E402
-
-
 def mix_distance(counts, reference):
     """Total variation is half the sum of absolute differences in category shares."""
     totals = counts.sum(axis=1)
     if counts.isna().any().any() or (counts < 0).any().any() or (totals <= 0).any():
         raise ValueError("Each quarter needs valid, non-negative statement counts")
-    shares = counts.div(totals, axis=0)
-    return shares.sub(shares.loc[reference]).abs().sum(axis=1) / 2
+    # Subtract integer cross-products before dividing. An exact 10% shift
+    # must still trigger an inclusive 10% threshold.
+    differences = counts * totals.loc[reference] - np.outer(totals, counts.loc[reference])
+    return differences.abs().sum(axis=1) / (2 * totals * totals.loc[reference])
 
 
 def decisions(rows, reference, alert, floor, streak):
@@ -51,6 +47,11 @@ def company_interval(group, seed):
 
 
 def plot(rows, alert, floor, path):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.ticker import PercentFormatter
+
     fig, (mix, accuracy) = plt.subplots(2, 1, figsize=(8, 6.1), sharex=True, layout="constrained")
     x = np.arange(len(rows))
     mix.bar(x, rows.mix_distance, color="#32767a", width=0.45)
@@ -67,7 +68,7 @@ def plot(rows, alert, floor, path):
     accuracy.axhline(floor, linestyle="--", color="#89521a", label=f"Review below {floor:.2%}")
     accuracy.set_ylim(0, 1)
     accuracy.set_ylabel("Top-five accuracy")
-    accuracy.set_title("Expected tag in the March mapper’s five suggestions", loc="left")
+    accuracy.set_title("Expected tag in the champion’s five suggestions", loc="left")
     accuracy.legend(loc="lower left", frameon=False)
     for i, row in enumerate(rows.itertuples()):
         accuracy.annotate(f"{row.hits}/{row.cases}", (i, row.high95), xytext=(0, 6),
