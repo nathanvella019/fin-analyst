@@ -55,3 +55,26 @@ We replayed every question against the supplied model and parser. The candidate 
 For original wording the extra reviews include 19 correct figures and one wrong figure. For reworded questions they include 16 correct figures and one wrong figure. The same underlying questions were tested twice. This retrospective comparison followed inspection of the errors and cannot establish future performance. Both filters were simulated. The deployed API still refers every request. The pending decision is whether to investigate a more selective filing-based rule. C3 permits referral decisions, while C4 still requires the wrong-verified-answer gate. This experiment does not give Task 2 a passing Actions run.
 
 To reproduce from the project root with the four prepared quarters, run `python scripts/compare_revenue_review.py` in the installed project environment. Commit `3cc27e1`, MLflow run `33dae08ac7fd4db0bae0b10e8e410341`. The run records the golden-set fingerprint and saves the results for each question.
+
+## Release gate evidence
+
+Commit `47056c7` uses the same filing check in the API and in CI. It keeps the original notebook filter in the report. The table shows **wrong figures / figures passing the filter**, with 151 questions per wording. All questions still go to an analyst in the running API.
+
+| Filter | Original | Reworded |
+|---|---:|---:|
+| Notebook | 1 / 126 | 1 / 115 |
+| Refer all revenue | 0 / 106 | 0 / 98 |
+| Require support from the filed income statement | 0 / 122 | 0 / 111 |
+
+Compared with the notebook filter, checking the filing sent four more figures per wording for review. One was wrong and three were correct. Zero errors in 111 accepted reworded cases gives a one-sided 95% upper error bound of 2.66%. The business target is below 1%. The two phrasings cover the same facts and cannot be pooled as independent observations.
+
+| RD2 Task 3 hand-in item | Evidence |
+|---|---|
+| Chosen metric | Correct tag in first five suggestions. Combined mapper 201/345 (58.26%), company bootstrap 95% interval 52.66–63.77%. |
+| Threshold | At least 182/345 on the frozen forward set. The full-year company benchmark retains its own 56.8% floor. |
+| Simple baseline and alternative metric | Taxonomy alone scored 43.48% top-five. For first suggestion only, the combined mapper scored 33.33% and taxonomy alone scored 22.32%. |
+| Release check | 12 tests passed locally. Original accuracy 147/151, full-year company top-five 424/702, forward top-five 201/345. Zero wrong figures passed the filing filter. |
+| Trace | Threshold measurement MLflow run `704dd329ca6c47e1a2d2c58caeefeac5`. Local release-gate run `e45f61d3047d489b88a1f9af0de30ee6` logs the scores, both fingerprints, Git revision, mapper run IDs and question-level results. |
+| GitHub Actions | [Earlier failing push](https://github.com/nathanvella019/fin-analyst/actions/runs/45456067938) · [Push with filing verification](https://github.com/nathanvella019/fin-analyst/actions/runs/45490395112) |
+
+[Threshold ADR](../../decisions/0012-forward-mapper-gate.md) · [Filing check ADR](../../decisions/0013-check-the-filed-revenue-line.md)
