@@ -22,3 +22,21 @@ PYTHONPATH=src ../fin-analyst/.venv/bin/python -m sec_analyst.rd2_metrics --data
 ```
 
 [Exact metrics and fingerprints](gate-metrics.json)
+
+## Service results by question type
+
+Local `make ci` on commit `a76813d` scored every question in both phrasings. Each row below gives counts in the order **correct / wrong number / no answer**. Each wording uses the same questions. The CI log also prints the rates with the number of questions in that row as the denominator.
+
+| Question type | Questions per wording | Original | Reworded |
+|---|---:|---:|---:|
+| Value on a date | 48 | 48 / 0 / 0 | 48 / 0 / 0 |
+| Fiscal year | 40 | 38 / 1 / 1 | 19 / 1 / 20 |
+| Quarter | 27 | 25 / 1 / 1 | 25 / 1 / 1 |
+| Count | 12 | 12 / 0 / 0 | 12 / 0 / 0 |
+| Rank | 12 | 12 / 0 / 0 | 12 / 0 / 0 |
+| Sum | 12 | 12 / 0 / 0 | 12 / 0 / 0 |
+| All | 151 | 147 / 2 / 2 | 128 / 2 / 21 |
+
+The saved reworded-answer evaluation gives more detail on the 21 unanswered cases. The parser did not understand 19 fiscal-year questions, including Pfenex’s net sales. Two understood questions found no matching rows, one about Echo Global Logistics and one about EQT GP Holdings. Across both phrasings Union Carbide returned $87 million against expected annual revenue of $5.842 billion and failed verification. FutureFuel returned $69.306 million against expected quarterly sales of $66.893 million and passed verification in both phrasings.
+
+Lint, ten unit tests and data validation passed. The three score checks passed. The zero-wrong-verified rule stopped release. The scores describe the frozen benchmark.
