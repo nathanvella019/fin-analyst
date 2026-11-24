@@ -1,5 +1,7 @@
 # Financial Statement Analyst
 
+**RD2 Task 5.** The March mapper triggered input reviews in Q3 and Q4. Only Q4 triggered an accuracy review. [Quarterly figure, tests and MLflow records](docs/evidence/rd2/task-5.md) · [Monitoring policy](docs/decisions/0015-quarterly-mapper-monitoring.md)
+
 **RD2 Task 4.** The local MLflow registry holds the February fallback and March champion. Three tracked builds and a verified rollback are recorded in the [Task 4 results and reproduction guide](docs/evidence/rd2/task-4.md).
 
 ## RD2 release gate
