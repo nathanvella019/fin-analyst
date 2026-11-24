@@ -13,3 +13,6 @@ __pycache__/
 data/
 build/
 dist/
+
+# Local diary and submission files
+/output/
