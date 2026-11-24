@@ -125,9 +125,9 @@ def demo(settings, cases, run_ids):
             version = existing[0]
         else:
             version = mlflow.register_model(run.data.tags["mapper_uri"], name)
-        versions.append(version.version)
+        versions.append(int(version.version))
     old = client.get_registered_model(name).aliases.get("champion")
-    if old is not None and str(old) not in versions:
+    if old is not None and int(old) not in versions:
         raise ValueError(f"Champion already points to unrelated version {old}")
     history = []
     try:
@@ -136,7 +136,7 @@ def demo(settings, cases, run_ids):
             selected = client.get_model_version_by_alias(name, "champion")
             model = mlflow.pyfunc.load_model(f"models:/{name}@champion")
             actual = ranking_hash(cases, model.predict(cases[FEATURES]))
-            if selected.version != versions[index] or actual != runs[index].data.params["rankings_sha256"]:
+            if int(selected.version) != versions[index] or actual != runs[index].data.params["rankings_sha256"]:
                 raise ValueError("Alias or its ordered predictions differ from the expected version")
             history.append({"action": action, "version": selected.version, "rankings_sha256": actual})
     except Exception:
