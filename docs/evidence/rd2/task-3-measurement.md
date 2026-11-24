@@ -40,3 +40,18 @@ Local `make ci` on commit `a76813d` scored every question in both phrasings. Eac
 The saved reworded-answer evaluation gives more detail on the 21 unanswered cases. The parser did not understand 19 fiscal-year questions, including Pfenex’s net sales. Two understood questions found no matching rows, one about Echo Global Logistics and one about EQT GP Holdings. Across both phrasings Union Carbide returned $87 million against expected annual revenue of $5.842 billion and failed verification. FutureFuel returned $69.306 million against expected quarterly sales of $66.893 million and passed verification in both phrasings.
 
 Lint, ten unit tests and data validation passed. The three score checks passed. The zero-wrong-verified rule stopped release. The scores describe the frozen benchmark.
+
+## What if an analyst reviewed every revenue question?
+
+We replayed every question against the supplied model and parser. The candidate policy starts with the notebook's filter, then refers any answer whose parsed concept is Revenue. The routing decision reads the same question and parser output available at request time. Reference answers are used to score outcomes.
+
+| Wording (151 each) | Filter | Pass filter | Go to review | Wrong among those passing |
+|---|---|---:|---:|---:|
+| Original | Notebook | 126 | 25 | 1 |
+| Original | Also refer revenue | 106 | 45 | 0 |
+| Reworded | Notebook | 115 | 36 | 1 |
+| Reworded | Also refer revenue | 98 | 53 | 0 |
+
+For original wording the extra reviews include 19 correct figures and one wrong figure. For reworded questions they include 16 correct figures and one wrong figure. The same underlying questions were tested twice. This retrospective comparison followed inspection of the errors and cannot establish future performance. Both filters were simulated. The deployed API still refers every request. The pending decision is whether to investigate a more selective filing-based rule. C3 permits referral decisions, while C4 still requires the wrong-verified-answer gate. This experiment does not give Task 2 a passing Actions run.
+
+To reproduce from the project root with the four prepared quarters, run `python scripts/compare_revenue_review.py` in the installed project environment. Commit `3cc27e1`, MLflow run `33dae08ac7fd4db0bae0b10e8e410341`. The run records the golden-set fingerprint and saves the results for each question.
