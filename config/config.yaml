@@ -32,3 +32,7 @@ rd2:
     march_end: "2016-03-31"
     # Ordered suggestions from Task 3 run 704dd329ca6c47e1a2d2c58caeefeac5.
     reference_rankings_sha256: "5dc3022f635d73c3f6b79054bf39eb4264dd21c0b0ac9f9877b3c5b59091cc30"
+  monitoring:
+    reference_quarter: "2016q1"
+    statement_mix_alert: 0.10
+    quarters_below_floor_to_retrain: 2
