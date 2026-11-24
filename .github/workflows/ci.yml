@@ -1,0 +1,40 @@
+name: Financial analyst CI
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MLFLOW_DISABLE_TELEMETRY: "true"
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - name: Check out the commit under test
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14.0"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-rd2.txt
+
+      - name: Install the pinned dependencies and project
+        run: |
+          python -m pip install -r requirements-rd2.txt setuptools==80.9.0
+          python -m pip install --no-deps --no-build-isolation .
+          python -m pip check
+
+      - name: Prepare four quarters of public SEC filings
+        run: python -m sec_analyst.prepare
+
+      - name: Run lint, unit tests, data validation and the release gate
+        run: make ci PYTHON=python
