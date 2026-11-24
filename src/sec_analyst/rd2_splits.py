@@ -46,30 +46,34 @@ def split_cases(con, processed, settings):
     return held, cases.reset_index(drop=True)
 
 
+def prepare_fit_inputs(con, processed, held):
+    # Restrict the source view before the mapper fits its word vocabulary.
+    con.register("held_companies", pd.DataFrame({"cik": held}))
+    con.read_parquet(str(processed / "08_line_items.parquet")).create_view("all_lines")
+    con.execute("""
+        CREATE VIEW li AS
+        SELECT l.* FROM all_lines l JOIN sub USING (adsh, cik, fsq)
+        ANTI JOIN held_companies USING (cik) WHERE NOT l.custom
+    """)
+    # Hash the standard examples and the exact taxonomy labels used by this fit.
+    pairs = con.sql("SELECT DISTINCT tag, label, stmt FROM li ORDER BY ALL").df()
+    taxonomy = con.sql("""
+        SELECT tag, any_value(tlabel) AS tlabel, 0 AS custom FROM tag
+        WHERE custom=0 AND tag IN (SELECT tag FROM li)
+        GROUP BY tag ORDER BY tag
+    """).df()
+    con.execute("DROP VIEW tag")
+    con.register("tag", taxonomy)
+    return digest(csv_bytes(pairs) + b'\x00' + csv_bytes(taxonomy))
+
+
 def run_fit(settings, quarters, held, cases, later, mode, revision, experiment):
     import mlflow
 
     processed = Path(settings["processed_dir"])
     with mlflow.start_run(experiment_id=experiment, run_name=mode) as run:
         with connect_warehouse(processed, quarters) as con:
-            # Restrict the source view before the mapper fits its word vocabulary.
-            con.register("held_companies", pd.DataFrame({"cik": held}))
-            con.read_parquet(str(processed / "08_line_items.parquet")).create_view("all_lines")
-            con.execute("""
-                CREATE VIEW li AS
-                SELECT l.* FROM all_lines l JOIN sub USING (adsh, cik, fsq)
-                ANTI JOIN held_companies USING (cik) WHERE NOT l.custom
-            """)
-            # Hash the standard examples and the exact taxonomy labels used by this fit.
-            pairs = con.sql("SELECT DISTINCT tag, label, stmt FROM li ORDER BY ALL").df()
-            taxonomy = con.sql("""
-                SELECT tag, any_value(tlabel) AS tlabel, 0 AS custom FROM tag
-                WHERE custom=0 AND tag IN (SELECT tag FROM li)
-                GROUP BY tag ORDER BY tag
-            """).df()
-            con.execute("DROP VIEW tag")
-            con.register("tag", taxonomy)
-            training_hash = digest(csv_bytes(pairs) + b'\x00' + csv_bytes(taxonomy))
+            training_hash = prepare_fit_inputs(con, processed, held)
             mlflow.set_tag("mlflow.source.git.commit", revision)
             mlflow.log_params({
                 "git_commit": revision, "fit_quarters": ",".join(quarters),
