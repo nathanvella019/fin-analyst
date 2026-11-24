@@ -1,0 +1,33 @@
+{
+  "run_id": "704dd329ca6c47e1a2d2c58caeefeac5",
+  "commit": "084a78bf9761aac5fd95a28f1c785f6a3b5f3c00",
+  "source_run": "7cdcc1f4615946c29634af72a9db2d67",
+  "holdout_sha256": "31a122ebcd820e23638ee1fb22ae24cedaef2b66db71728d39623eb30887d203",
+  "training_inputs_sha256": "2a3f0907fee6993cddb6a53a4a77a81a7946b5e1d48496c14a6a8609de1fbcf7",
+  "bootstrap_draws": 10000,
+  "seed": 3217,
+  "metrics": {
+    "combined_top1": 0.3333333333333333,
+    "combined_top1_hits": 115,
+    "combined_top1_lo": 0.28362573099415206,
+    "combined_top1_hi": 0.3855421686746988,
+    "combined_top5": 0.5826086956521739,
+    "combined_top5_hits": 201,
+    "combined_top5_lo": 0.5266106442577031,
+    "combined_top5_hi": 0.6377245508982036,
+    "taxonomy_top1": 0.22318840579710145,
+    "taxonomy_top1_hits": 77,
+    "taxonomy_top1_lo": 0.1797084092684197,
+    "taxonomy_top1_hi": 0.2678062678062678,
+    "taxonomy_top5": 0.43478260869565216,
+    "taxonomy_top5_hits": 150,
+    "taxonomy_top5_lo": 0.3812154696132597,
+    "taxonomy_top5_hi": 0.4880239520958084,
+    "gain_top1_lo": 0.06744868035190615,
+    "gain_top1_hi": 0.1543026706231454,
+    "gain_top5_lo": 0.10256410256410259,
+    "gain_top5_hi": 0.19428571428571428,
+    "test_cases": 345,
+    "companies": 278
+  }
+}

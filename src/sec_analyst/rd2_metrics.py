@@ -11,7 +11,7 @@ import pandas as pd
 import yaml
 
 from sec_analyst.mapper import TagMapper
-from sec_analyst.rd2_splits import COLUMNS, csv_bytes, digest, prepare_fit_inputs, split_cases, verify
+from sec_analyst.rd2_splits import COLUMNS, csv_bytes, prepare_fit_inputs, split_cases, verify
 from sec_analyst.warehouse import connect_warehouse
 
 
